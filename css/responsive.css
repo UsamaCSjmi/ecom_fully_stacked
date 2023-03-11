@@ -1,0 +1,250 @@
+
+/* Side Menu  */
+.sideNav{
+    z-index: 999;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    width: 300px;
+    box-shadow: 0 10px 20px #00000017;
+    transition: left 0.5s ease-in-out;
+}
+.sideNavHead{
+    display: none;
+}
+.hideNav{
+    left: -300px;
+    transition: left 0.5s ease-in-out;
+}
+.sideNav .navItem{
+    display: block;
+}
+.sideNav li{
+    border-bottom: 1px solid #00000017;
+}
+.sideNav .hasNav{
+    position: relative;
+}
+.sideNav .hasNav .up-down-btn{
+    top: 0;
+}
+
+.sideNav .hasNav:hover > .subNavigation{
+    visibility: hidden;
+    /* transform: translateZ(0);
+    transition: all .3s cubic-bezier(.2,.06,.05,.95); */
+
+}
+
+
+
+
+/* .sideNav .hasNav::after{
+    position: absolute;
+    content: url(../icons/arrow.svg);
+    top: 10px;
+    right: 10px;
+    transform: rotate(90deg);
+    border-bottom: 1px solid #00000028;
+} */
+
+.sideNav .sideNavHead .navItem{
+    font-size: 18px ;
+    letter-spacing: 8px;
+    font-weight: 100;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen  and (max-width:770px){
+    .announcements{
+        flex-direction: column;
+    }
+    .menu-button{
+        display: block;
+    }
+
+
+
+
+
+    
+
+    .sideNavHead{
+        display: flex;
+    }
+    .mobile-sub-menu{
+        background: #fff;
+        visibility: hidden;
+        position: unset;
+        z-index: 7;
+        max-height: 0;
+        width: 100%;
+        opacity:0;
+        transition: max-height 0.9s ease-out, opacity 0.5s;
+    }
+    .mobile-sub-nav{
+        visibility: visible;
+        max-height:300px;
+        overflow-y: auto;
+        opacity :1;
+        transition: max-height 0.9s ease-out, opacity 0.5s;
+    }
+    .mobile-sub-nav li{
+        border: none;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .banner-slideshow,.banner-image{
+        height: 50vh;
+    }
+    .grid-5,.grid-4{
+        grid-template-columns: 50% 50%;
+    }
+    .product-grid{
+        grid-template-columns: auto auto auto auto auto;
+        width: 100%;
+        overflow-x: auto;
+    }
+    .product-grid .item{
+        width: 200px;
+    }
+    .footer-grid{
+        grid-template-columns: 50% 50% ;
+    }
+    .window-inner{
+        flex-direction: column;
+    }
+    .sub-images-container{
+        width: 100%;
+    }
+    .product-sub-images{
+        flex-direction: row;
+        /* width: 100%; */
+        overflow-x: auto;
+    }
+    .product-sub-images img{
+        margin-right: 10px;
+        width: 65px;
+    }
+    .product-main-image,.window-product-description{
+        width: 100%;
+        margin-left: 0;
+    }
+
+
+
+	.shop__cart__table {
+		overflow-x: auto;
+	}
+	.shop__cart__table tbody tr .cart__product__item img {
+		float: none;
+		margin-right: 0;
+	}
+	.cart__btn {
+		text-align: center;
+		margin-bottom: 25px;
+	}
+	.cart__btn.update__btn {
+		text-align: center;
+	}
+	.discount__content h6 {
+		display: block;
+		margin-right: 0;
+		margin-bottom: 20px;
+	}
+	.discount__content {
+		margin-bottom: 35px;
+	}
+}
+
+
+
+
+@media only screen  and (max-width:490px){
+    .banner-slideshow,.banner-image{
+        height: 35vh;
+    }
+    .banner-text {
+        padding: 10px 20px;
+        font-size: 30px;
+    }
+    .site-heading-simple h1 {
+        padding: 30px 0;
+    }
+    .main-tagline{
+        font-size: 20px;
+    }
+    .promo-section{
+        height: unset;
+    }
+    .promo-box{
+        top: 0px;
+        left: 10px;
+        width: 90%;
+    }
+    .promo-content{
+        padding: 15px;
+    }
+    .about-us h1{
+        line-height: 40px;
+    }
+    .footer-grid{
+        grid-template-columns: 100% ;
+    }
+}
+
+@media only screen  and (max-width:400px){
+    .cart-area{
+        width: 100%;
+    }
+}
+
+
+@media only screen  and (max-width:340px){
+    .announcements{
+        font-size: 10px;
+    }
+    .grid-5,grid-4{
+        grid-template-columns: 100%;
+    } .product-grid{
+        grid-template-columns: auto auto auto auto auto;
+    }
+}

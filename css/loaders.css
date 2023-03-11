@@ -1,0 +1,41 @@
+.loader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.site-preloader{
+    position: relative;
+    height: 10px;
+    width: 200px;
+    border:1px solid rgba(255, 255, 255, 0.685);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.site-preloader::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80%;
+    border-radius: 4px;
+    height: 100%;
+    background: rgba(255, 255, 255, 1);
+    animation-name: siteLoader;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+@keyframes siteLoader {
+    0%{
+        left: -100%;
+    }
+    100%{
+        left: 100%;
+    }
+}
