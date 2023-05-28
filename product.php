@@ -1,3 +1,4 @@
+<?php include "./config/config.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,7 +10,7 @@
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
         
-        <title>The Decor Shop</title>
+        <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
         <div id="body-loader" class="loader">
@@ -56,39 +57,6 @@
                         <p id="finish" class="detail "></p>
                         <p class="detail warranty">ONE YEAR WARRANTY ON MOVEMENT MACHINE</p>
                         <p class="ready-time">As We Make Fresh Piece-Dispatch Within 3 TO 5 Days...!</p>
-                        <!-- <div class="ask-us-outer flexbox col center collapsible w-100">
-                            <button onclick="collapseForm()" class="collapse-form-btn btn w-100">
-                                Ask a question
-                                <div class="up-down-btn">
-                                    <img id="arrowBtn" src="icons/arrow.svg" alt="">
-                                </div>
-                            </button>
-                            <div id="ask-us-inner" class="ask-us-inner container">
-                                <form action="#" class="ask-us w-100 flexbox col start-even">
-                                    <div class="flexbox input-row w-100">
-                                        <div class="input-item flexbox col start-even">
-                                            <label for="name">Name</label>
-                                            <input type="text" name="name" id="name" >
-                                        </div>
-                                        <div class="input-item flexbox col start-even">
-                                            <label for="email">Email</label>
-                                            <input type="email" id="email" >
-                                        </div>
-                                    </div>
-                                    <div class="input-item flexbox col start-even">
-                                        <label for="mobile">Phone number</label>
-                                        <input type="text" id="mobile">
-                                    </div>
-                                    <div class="input-item flexbox col start-even">
-                                        <label for="message">Message</label>
-                                        <textarea name="message" id="" rows="5"></textarea>
-                                    </div>
-                                    <div class="input-item w-100">
-                                        <input type="submit" class="btn btn-secondary hover-shine" value="Send">    
-                                    </div>
-                                </form>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </div>

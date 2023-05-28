@@ -4,7 +4,6 @@ include './backend/lib/Session.php';
 Session::init();
 include './backend/lib/Database.php';
 include './backend/helpers/Format.php';
-
 spl_autoload_register(function ($class) {
     include_once "./backend/classes/".$class.".php";
 });
@@ -83,7 +82,7 @@ $getCat2 = $cat2->getAllCat();
                             </div>
                         </div>
                         <?php
-                            if($_SERVER['REQUEST_URI']!="/thedecorshop/checkout.php"){
+                            if($_SERVER['REQUEST_URI']!=SITE_PATH."/checkout.php"){
                         ?>
                         <div onclick="showSearch()" class="search navbarIcon">
                             <img src="icons/search.svg" alt="search">
@@ -96,8 +95,8 @@ $getCat2 = $cat2->getAllCat();
                         <a href="index.php">
                             <div class="logo">
                                 <img class="logo-image"src="./images/d_white.png" alt="logo">
-                                <p class="logo-head">DECOR</p>
-                                <p class="logo-para">SHOP</p>
+                                <p class="logo-head">DESIGNERS</p>
+                                <p class="logo-para">HOME</p>
                             </div>
                         </a>
                     </div>
@@ -108,7 +107,7 @@ $getCat2 = $cat2->getAllCat();
                         ?>
 
                         <div class="user navbarIcon" onclick="user_logout()">
-                            <img src="icons/logout.svg" alt="user">
+                            <img src="<?php echo SITE_PATH?>/icons/logout.svg" alt="user">
                         </div>
 
                         <?php
@@ -118,18 +117,23 @@ $getCat2 = $cat2->getAllCat();
 
                         <div class="user navbarIcon">
                             <a href="login.php">
-                                <img src="icons/user.svg" alt="user">
+                                <img src="<?php echo SITE_PATH?>/icons/user.svg" alt="user">
                             </a>
                         </div>
                         
                         <?php
                         }
                         ?>
-
+                         <?php
+                            if($_SERVER['REQUEST_URI']!=SITE_PATH."/checkout.php"){
+                        ?>
                         <div onclick="showCart()" class="cart navbarIcon cartIcon">
                             <img src="icons/cart.svg" alt="cart">
                             <div id="total-cart-items" onload="total_cart_items()"></div>
                         </div>
+                        <?php
+                            }
+                        ?>
                     </div>
                 </div>
 
@@ -139,15 +143,15 @@ $getCat2 = $cat2->getAllCat();
                 <ul id="side-nav" class="">
                     <li class="sideNavHead w-100 flexbox start-even">
                         <span class="navItem">
-                            <a href="index.html">
+                            <a href="<?php echo SITE_PATH?>">
                                 <div class="logo">
-                                    <img class="logo-image"src="./images/d_white.png" alt="logo">
+                                    <img class="logo-image"src=<?php echo SITE_PATH?>"/images/d_white.png" alt="logo">
                                 </div>
                             </a>
                         </span>
                         <span class="navItem">
                             <div class="close navbarIcon" onclick="hideNav()">
-                                <img src="icons/close.svg" alt="close">
+                                <img src="<?php echo SITE_PATH?>/icons/close.svg" alt="close">
                             </div>
                         </span>
                     </li>
@@ -160,7 +164,7 @@ $getCat2 = $cat2->getAllCat();
                             if(!$getSubcat){
                         ?>
                             <li class="navItem">
-                                <a class="navLink" href="category.php?catId=<?php echo $resultCat['id']?>">
+                                <a class="navLink" href="<?php echo SITE_PATH?>/category.php?catId=<?php echo $resultCat['id']?>">
                                     <?php echo $resultCat['categories']?>
                                 </a>
                             </li>  
@@ -170,7 +174,7 @@ $getCat2 = $cat2->getAllCat();
                                 ?>
 
                                 <li class="navItem hasNav">
-                                    <a class="navLink" href="category.php?catId=<?php echo $resultCat['id']?>">
+                                    <a class="navLink" href="<?php echo SITE_PATH?>/category.php?catId=<?php echo $resultCat['id']?>">
                                         <?php echo $resultCat['categories']?>
                                     </a>
                                     <ul id="" class="subNavigation  text-left">
@@ -178,7 +182,7 @@ $getCat2 = $cat2->getAllCat();
                                           while ($resultSubcat = $getSubcat->fetch_assoc()){
                                         ?>
                                         <li class="subNavItem">
-                                            <a class="subNavLink" href="category.php?subcatId=<?php echo $resultSubcat['id']?>">
+                                            <a class="subNavLink" href="<?php echo SITE_PATH?>/category.php?subcatId=<?php echo $resultSubcat['id']?>">
                                                 <?php echo $resultSubcat['sub_categories']?>
                                             </a>
                                         </li>
@@ -196,10 +200,10 @@ $getCat2 = $cat2->getAllCat();
                     
 
                     <li class="navItem">
-                        <a class="navLink" href="about.php">About Us</a>
+                        <a class="navLink" href="<?php echo SITE_PATH?>/about.php">About Us</a>
                     </li>
                     <li class="navItem">
-                        <a class="navLink" href="contact.php">Contact Us</a>
+                        <a class="navLink" href="<?php echo SITE_PATH?>/contact.php">Contact Us</a>
                     </li>
                     
                 </ul> 
@@ -209,7 +213,7 @@ $getCat2 = $cat2->getAllCat();
         </div>
         
         <?php
-        if($_SERVER['REQUEST_URI']!="/thedecorshop/checkout.php"){
+        if($_SERVER['REQUEST_URI']!=SITE_PATH."/checkout.php"){
         ?>
 
         <div id="searchPanel"class="siteSearchPanel flexbox center w-100">

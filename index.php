@@ -1,7 +1,9 @@
+<?php include "./config/config.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta type="robot" content = "noindex,nofollow">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">       
         <link rel="shortcut icon" href="./images/d_white.png" type="image/x-icon">
@@ -11,7 +13,7 @@
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
         
-        <script src="js/jquery.min.js"></script>
+        <!-- <script src="js/jquery.min.js"></script>
         <script src="owlcarousel/owl.carousel.min.js"></script>
         <script src="js/index.js"></script>
         <script src="js/cart.js"></script>
@@ -27,8 +29,8 @@
                 items:1,
                 smartSpeed:1000
             })
-        </script>
-        <title>The Decor Shop</title>
+        </script> -->
+        <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
         <div id="body-loader" class="loader">
@@ -39,7 +41,7 @@
             <div class="site-banner-area w-100">
                 <div class="banner-slideshow owl-carousel owl-theme">
                     <?php
-                    require_once ('./backend/classes/Banner.php');
+                    require_once (SERVER_PATH.'/backend/classes/Banner.php');
                     $banners = new Banner();
 
                     $getBan = $banners->getAllBan();
@@ -49,7 +51,7 @@
                             <div class="item">
                                 <div class="banner w-100">
                                     <div class="banner-image flexbox center w-100">
-                                        <img src="images/banner/<?php echo $banner['image']?>" alt="banner">
+                                        <img src="<?php echo BANNER_IMAGE_SITE_PATH?>/<?php echo $banner['image']?>" alt="banner">
                                     </div>
                                 </div>
                             </div>                            
@@ -165,11 +167,11 @@
 
             <div class="container">
                 <div class="about-us w-100 flexbox col start-even">
-                    <h1 class="about-us-head">Welcome to The decor Shop</h1>
+                    <h1 class="about-us-head">Welcome to <?php echo COMPANY_NAME?></h1>
                     <div class="about-us-content">
-                        THE DECOR SHOP Is An Online Retailer Of Luxury, Modern And Elegant Home Décor And Lifestyle Products. Operating From Moradabad and Delhi.
+                    <?php echo COMPANY_NAME?> is An Online Retailer Of Luxury, Modern And Elegant Home Décor And Lifestyle Products. Operating From Moradabad and Delhi.
                         <br>
-                        THE DECOR SHOP Philosophy Is That It Is Possible To Feature Well-Designed, Fashion-Forward, High-Quality Products At Competitive Prices. The Four Cornerstones Are : <br><br>
+                        <?php echo COMPANY_NAME?> Philosophy Is That It Is Possible To Feature Well-Designed, Fashion-Forward, High-Quality Products At Competitive Prices. The Four Cornerstones Are : <br><br>
                         <ul>
                             <li>
                                 Design: Well-Designed, Fashion-Forward Products For The Mass Market
@@ -185,7 +187,7 @@
                             </li>
                         </ul>
                         <br>
-                        THE DECOR SHOP Factory Located In Moradabad and Delhi. The Owners Of Company Are __________________ And ___________. We Have Fully Dedicated Team Of Designers, Manufacturing Workers And Marketing. Who Are Working With Utmost Inspiration To Bring You Best Quality And Most Innovative Home Decor Products.
+                        <?php echo COMPANY_NAME?> Factory Located In Moradabad and Delhi. The Owners Of Company Are <?php echo OWNER_NAME?>. We Have Fully Dedicated Team Of Designers, Manufacturing Workers And Marketing. Who Are Working With Utmost Inspiration To Bring You Best Quality And Most Innovative Home Decor Products.
                         <br><br>
                         Our Categories Include Designer Lights, Designer Paintings, Tables, Wall Clocks, Planters, Candles, Small Décor Products. 
                     </div>
@@ -197,7 +199,7 @@
         <?php require_once('./utilities/overlay.php')?>
         
         <?php require_once('./utilities/cart.php')?>
-        <a href="https://wa.me/918171475514" id="wa" class="whatsapp flexbox center">
+        <a href="https://wa.me/91<?php echo MOBILE?>" id="wa" class="whatsapp flexbox center">
             <img src="icons/whatsapp.svg" alt="whatsapp logo">
         </a>
         <script src="js/jquery.min.js"></script>

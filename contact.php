@@ -1,3 +1,4 @@
+<?php include "./config/config.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,7 +11,7 @@
         <link rel="stylesheet" href="./css/loaders.css">
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
-        <title>The Decor Shop</title>
+        <title>Contact - <?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
         <div id="body-loader" class="loader">
@@ -59,27 +60,17 @@
             <?php require_once('./utilities/footer.php')?>
 
         </div>
-        <?php require_once('./utilities/overlay.php')?>
 
         <?php require_once('./utilities/cart.php')?>
-        <a href="https://wa.me/918171475514" id="wa" class="whatsapp flexbox center">
+        <a href="https://wa.me/91<?php echo MOBILE?>" id="wa" class="whatsapp flexbox center">
             <img src="icons/whatsapp.svg" alt="whatsapp logo">
         </a>
-        <script src="js/jquery.min.js"></script>
-        <script src="owlcarousel/owl.carousel.min.js"></script>
         <script>
             function loader(id){
                 document.getElementById(id).style.display="none";
             }
-            $('.owl-carousel').owlCarousel({
-                loop:true,
-                autoplay:true,
-                margin:0,
-                nav:true,
-                items:1,
-                smartSpeed:1000
-            })
         </script>
+        <script src="js/jquery.min.js"></>
         <script src="js/index.js"></script>
         <script src="js/cart.js"></script>
     </body>

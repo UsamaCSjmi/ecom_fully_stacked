@@ -1,3 +1,4 @@
+<?php include "./config/config.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,12 +10,12 @@
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
         
-        <title>The Decor Shop</title>
+        <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
-        <!-- <div id="body-loader" class="loader">
+        <div id="body-loader" class="loader">
             <div class="site-preloader"></div>
-        </div> -->
+        </div>
         <div class="site-wrapper flexbox col center w-100">
         
             <?php require_once('./utilities/header.php')?>
@@ -148,25 +149,3 @@
         </script>
     </body>
 </html>
-
-
-
-
-
-
-
-
-    Paintings
-    Lights
-    Flowers & Artifacts
-    Flowers & Planters Table Decors
-    Metal Wall Decor  
-
-
-
-
-
-
-
-
-

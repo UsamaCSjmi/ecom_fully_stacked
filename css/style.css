@@ -1107,3 +1107,50 @@ footer li{
     100%{transform: rotate(0deg)}
     
 }
+
+
+
+/* ================================Policies============================================ */
+
+.policy{
+    margin: 100px 0px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+}
+.policy-heading-big{
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+}
+.policy-heading-small{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;   
+    font-weight: bold;
+    margin: 20px 0; 
+}
+.policy-text{
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 30px;
+}
+.policy h4{
+    margin-top: 50px;
+}
+.policy ul, .policy ol{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 50px;
+}
+.policy ul li {
+    margin: 10px 0;
+    list-style: disc;
+}
+.policy ol li{
+    margin: 10px 0;
+    list-style:lower-roman;
+}

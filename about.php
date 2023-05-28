@@ -1,3 +1,5 @@
+<?php include "./config/config.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,15 +19,15 @@
             <div class="site-preloader"></div>
         </div>
         <div class="site-wrapper flexbox col center w-100">
-            <?php require_once('./utilities/header.php')?>
+            <?php require_once(SERVER_PATH.'/utilities/header.php')?>
             <div class="container flexbox center">
-                <div class=" container about-us flexbox col start-even">
+                <div class=" container about-us w-100 flexbox col start-even">
                     <h1 class="page-head w-100 center">About Us</h1>
-                    <h1 class="about-us-head w-100 center">Welcome to The decor Shop</h1>
+                    <h1 class="about-us-head w-100 center">Welcome to <?php echo COMPANY_NAME?></h1>
                     <div class="about-us-content">
-                        THE DECOR SHOP Is An Online Retailer Of Luxury, Modern And Elegant Home Décor And Lifestyle Products. Operating From Moradabad and Delhi.
+                    <?php echo COMPANY_NAME?> is An Online Retailer Of Luxury, Modern And Elegant Home Décor And Lifestyle Products. Operating From Moradabad and Delhi.
                         <br>
-                        THE DECOR SHOP Philosophy Is That It Is Possible To Feature Well-Designed, Fashion-Forward, High-Quality Products At Competitive Prices. The Four Cornerstones Are : <br><br>
+                        <?php echo COMPANY_NAME?> Philosophy Is That It Is Possible To Feature Well-Designed, Fashion-Forward, High-Quality Products At Competitive Prices. The Four Cornerstones Are : <br><br>
                         <ul>
                             <li>
                                 Design: Well-Designed, Fashion-Forward Products For The Mass Market
@@ -41,36 +43,25 @@
                             </li>
                         </ul>
                         <br>
-                        THE DECOR SHOP Factory Located In Moradabad and Delhi. The Owners Of Company Are __________________ And ___________. We Have Fully Dedicated Team Of Designers, Manufacturing Workers And Marketing. Who Are Working With Utmost Inspiration To Bring You Best Quality And Most Innovative Home Decor Products.
+                        <?php echo COMPANY_NAME?> Factory Located In Moradabad and Delhi. The Owners Of Company Are <?php echo OWNER_NAME?>. We Have Fully Dedicated Team Of Designers, Manufacturing Workers And Marketing. Who Are Working With Utmost Inspiration To Bring You Best Quality And Most Innovative Home Decor Products.
                         <br><br>
                         Our Categories Include Designer Lights, Designer Paintings, Tables, Wall Clocks, Planters, Candles, Small Décor Products. 
                     </div>
                 </div>
             </div>
-            <?php require_once('./utilities/footer.php')?>
-
+            <?php require_once(SERVER_PATH.'/utilities/footer.php')?>
         </div>
-        <?php require_once('./utilities/overlay.php')?>
-        
-        <?php require_once('./utilities/cart.php')?>
-        <a href="https://wa.me/918171475514" id="wa" class="whatsapp flexbox center">
-            <img src="icons/whatsapp.svg" alt="whatsapp logo">
+        <?php require_once(SERVER_PATH.'/utilities/overlay.php')?>
+        <?php require_once(SERVER_PATH.'/utilities/cart.php')?>
+        <a href="https://wa.me/91<?php echo MOBILE?>" id="wa" class="whatsapp flexbox center">
+            <img src="<?php echo SITE_PATH?>/icons/whatsapp.svg" alt="whatsapp logo">
         </a>
-        <script src="js/jquery.min.js"></script>
-        <script src="owlcarousel/owl.carousel.min.js"></script>
         <script>
             function loader(id){
                 document.getElementById(id).style.display="none";
             }
-            $('.owl-carousel').owlCarousel({
-                loop:true,
-                autoplay:true,
-                margin:0,
-                nav:true,
-                items:1,
-                smartSpeed:1000
-            })
         </script>
+        <script src="js/jquery.min.js"></script>
         <script src="js/index.js"></script>
         <script src="js/cart.js"></script>
     </body>
