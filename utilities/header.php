@@ -37,7 +37,7 @@ $getCat2 = $cat2->getAllCat();
                 <div class="toolbar-item">
                     <ul class="social-items">
                         <li>
-                            <a class="flexbox center" href="https://www.instagram.com/" target="_blank">
+                            <a class="flexbox center" href="https://instagram.com/the.designershome" target="_blank">
                                 <img class="icon icon1" src="icons/instagram.svg" alt="india">
                             </a>
                         </li>
@@ -82,7 +82,7 @@ $getCat2 = $cat2->getAllCat();
                             </div>
                         </div>
                         <?php
-                            if($_SERVER['REQUEST_URI']!=SITE_PATH."/checkout.php"){
+                            if($_SERVER['REQUEST_URI']!="/thedecorshop/checkout.php"){
                         ?>
                         <div onclick="showSearch()" class="search navbarIcon">
                             <img src="icons/search.svg" alt="search">
@@ -125,7 +125,7 @@ $getCat2 = $cat2->getAllCat();
                         }
                         ?>
                          <?php
-                            if($_SERVER['REQUEST_URI']!=SITE_PATH."/checkout.php"){
+                            if($_SERVER['REQUEST_URI']!="/thedecorshop/checkout.php"){
                         ?>
                         <div onclick="showCart()" class="cart navbarIcon cartIcon">
                             <img src="icons/cart.svg" alt="cart">
@@ -145,7 +145,7 @@ $getCat2 = $cat2->getAllCat();
                         <span class="navItem">
                             <a href="<?php echo SITE_PATH?>">
                                 <div class="logo">
-                                    <img class="logo-image"src=<?php echo SITE_PATH?>"/images/d_white.png" alt="logo">
+                                    <img class="logo-image"src="<?php echo SITE_PATH?>/images/d_white.png" alt="logo">
                                 </div>
                             </a>
                         </span>

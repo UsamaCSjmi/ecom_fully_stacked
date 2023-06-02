@@ -45,7 +45,7 @@ class Category
 
     public function getCatById($catid)
     {
-        $query = "SELECT * FROM categories WHERE id = '$catid'";
+        $query = "SELECT * FROM categories WHERE id = '$catid' AND status=1";
         $result = $this->db->select($query);
         return $result;
     }

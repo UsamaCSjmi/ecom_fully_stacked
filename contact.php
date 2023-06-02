@@ -32,11 +32,11 @@
                                     <div class="flexbox input-row w-100">
                                         <div class="input-item flexbox col start-even">
                                             <label for="name">Name</label>
-                                            <input type="text" name="name" id="name" >
+                                            <input type="text" name="name" id="name" required>
                                         </div>
                                         <div class="input-item flexbox col start-even">
                                             <label for="email">Email</label>
-                                            <input type="email" id="email" >
+                                            <input type="email" id="email" required>
                                         </div>
                                     </div>
                                     <div class="input-item flexbox col start-even">
@@ -65,12 +65,12 @@
         <a href="https://wa.me/91<?php echo MOBILE?>" id="wa" class="whatsapp flexbox center">
             <img src="icons/whatsapp.svg" alt="whatsapp logo">
         </a>
-        <script>
+        <script type="text/javascript">
             function loader(id){
                 document.getElementById(id).style.display="none";
             }
         </script>
-        <script src="js/jquery.min.js"></>
+        <script src="js/jquery.min.js"></script>
         <script src="js/index.js"></script>
         <script src="js/cart.js"></script>
     </body>

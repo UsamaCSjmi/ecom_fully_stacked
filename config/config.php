@@ -1,8 +1,8 @@
 <?php
 define('COMPANY_NAME',"The Designers Home");
 define('OWNER_NAME',"Mohd. Shahnawaz");
-define("MOBILE","7453003650");
-define("ADDRESS","KISROL PANCHMUKHI MANDIR WALI GALI GANGA MANDIR, Moradabad, Uttar Pradesh, 244001");
+define("MOBILE","7453003650"); 
+define("ADDRESS","KISROL THANA NAGPHANI PANCHMUKHI MANDIR WALI GALI GANGA MANDIR, Moradabad, Uttar Pradesh, 244001");
 define("EMAIL","info@thedesignershome.com");
 define("WEBSITE","www.thedesignershome.com");
 

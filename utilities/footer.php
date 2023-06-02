@@ -51,7 +51,7 @@
                                 <li>Contact : +91- <?php echo MOBILE?></li>
                                 <li>Email : <?php echo EMAIL?></li>
                                 <li class="flexbox start w-100">
-                                    <a class="flexbox center" href="https://www.instagram.com/" target="_blank">
+                                    <a class="flexbox center" href="https://instagram.com/the.designershome" target="_blank">
                                         <img class="icon icon1" src="icons/instagram.svg" alt="india">
                                     </a>
                                     <a class="flexbox center" href="https://www.instagram.com/" target="_blank">

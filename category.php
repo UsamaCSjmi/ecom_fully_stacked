@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="./css/loaders.css">
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
-        
         <title>Categories - <?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
@@ -17,7 +16,7 @@
             <div class="site-preloader"></div>
         </div>
         <div class="site-wrapper flexbox col center w-100">
-            <?php require_once(SITE_PATH.'/utilities/header.php')?>
+            <?php require_once(SERVER_PATH.'/utilities/header.php')?>
             <div class="container flexbox col center">
 
                 <?php
@@ -32,20 +31,22 @@
                         $category = new Category();
                         $getCategory = $category->getCatById($catId);
                         $cat = $getCategory->fetch_assoc();
-                ?>
-
+                
+                        $subCategory = new Subcategory();
+                        $getSubcategory = $subCategory->getSubcatByCatId($catId);
+                        if($getSubcategory != ""){
+                           ?>
+                        
                 <div class="site-heading-simple w-100 flexbox center">
                     <h1><?php echo $cat['categories']?> - includes</h1>
                 </div>
                 <!-- categories grid -->
                 <div class="categories site-grid grid-5 w-100">
                     <?php
-                        $subCategory = new Subcategory();
-                        $getSubcategory = $subCategory->getSubcatByCatId($catId);
-
                         while ($subcat = $getSubcategory->fetch_assoc()) {
                             $product=new Product();
                             $getProduct=$product->getProImgBySubCatId($subcat['id']);
+                            if($getProduct!=""){                             
                             $proimg = $getProduct->fetch_assoc();
 
                     ?>
@@ -59,7 +60,9 @@
                         </div>
 
                     <?php
-
+                       
+                                }
+                            }
                         }
                     }
                     ?>    
@@ -155,5 +158,6 @@
 
         <script src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script src="js/cart.js"></script>
     </body>
 </html>

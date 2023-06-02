@@ -47,7 +47,7 @@
                             <span onclick="increasQty('qty-product')"class="update-qty-btn">+</span>
                         </div>
                         <div class="product-buttons w-100">
-                            <button onclick="addToCart()"class="btn btn-primary">Add To Cart</button>
+                            <button id="add-to-cart-btn" class="btn btn-primary">Add To Cart</button>
                             <button onclick="buyNow()"class="btn btn-secondary hover-shine">Buy It Now</button>
                         </div>
                         <p id="short-desc"class="product-short-description"></p>
@@ -113,89 +113,8 @@
 
             <?php require_once('./utilities/footer.php')?>
         </div>
-        <div id="cart" class="shopping-cart-overlay w-100">
-            <div class="cart-area flexbox col start-even">
-                <div class="cart-head flexbox start-even w-100">
-                    <h2>cart</h2>
-                    <div class="close cartIcon" onclick="hideCart()">
-                        <img src="icons/close.svg" alt="close">
-                    </div>
-                </div>
-                <div class="cart-items flexbox col start w-100">
-                    <div class="cart-item flexbox w-100">
-                        <div class="cart-product-image">
-                            <a href="product.html">
-                                <img src="images/img7.webp" alt="">
-                            </a>
-                        </div>
-                        <div class="cart-product-description flexbox col start w-100">
-                            <a href="product.html">
-                                <p class="product-name w-100">ANTIQUE BLACK GOLDEN CAMBER TRINKET WALL CLOCK</p>
-                            </a>
-                            <div class="cart-product-info w-100 flexbox ">
-                                <div class="quantity-bar flexbox">
-                                    <span onclick="decreaseQty('qty-1')"class="update-qty-btn">-</span>
-                                    <input id="qty-1"class="quantity-input"type="text" value="1">
-                                    <span onclick="increasQty('qty-1')"class="update-qty-btn">+</span>
-                                </div>
-                                <p class="new-price">Rs. 1200.00</p>
-                            </div>
-                        </div>
 
-                    </div>
-                    <div class="cart-item flexbox w-100">
-                        <div class="cart-product-image">
-                            <a href="product.html">
-                                <img src="images/img8.webp" alt="">
-                            </a>
-                        </div>
-                        <div class="cart-product-description flexbox col start w-100">
-                            <a href="product.html">
-                                <p class="product-name w-100">ANTIQUE BLACK GOLDEN CAMBER TRINKET WALL CLOCK</p>
-                            </a>
-                            <div class="cart-product-info w-100 flexbox ">
-                                <div class="quantity-bar flexbox">
-                                    <span onclick="decreaseQty('qty-2')"class="update-qty-btn">-</span>
-                                    <input id="qty-2"class="quantity-input"type="text" value="1">
-                                    <span onclick="increasQty('qty-2')"class="update-qty-btn">+</span>
-                                </div>
-                                <p class="new-price">Rs. 1200.00</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="cart-item flexbox w-100">
-                        <div class="cart-product-image">
-                            <a href="product.html">
-                                <img src="images/img9.webp" alt="">
-                            </a>
-                        </div>
-                        <div class="cart-product-description flexbox col start w-100">
-                            <a href="product.html">
-                                <p class="product-name w-100">ANTIQUE BLACK GOLDEN CAMBER TRINKET WALL CLOCK</p>
-                            </a>
-                            <div class="cart-product-info w-100 flexbox ">
-                                <div class="quantity-bar flexbox">
-                                    <span onclick="decreaseQty('qty-3')"class="update-qty-btn">-</span>
-                                    <input id="qty-3"class="quantity-input"type="text" value="1">
-                                    <span onclick="increasQty('qty-3')"class="update-qty-btn">+</span>
-                                </div>
-                                <p class="new-price">Rs. 1200.00</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="cart-footer w-100 flexbox col">
-                    <div class="cart-subtotal flexbox w-100 start-even">
-                        <p class="footer-heading" style="font-size: 13px;">subtotal</p>
-                        <p class="footer-heading" style="font-size: 13px;">Rs. 12,700.00</p>
-                    </div>
-                    <p class="cart-note">Shipping, taxes, and discounts codes calculated at checkout. Orders will be processed in INR. </p>
-                    <a class="btn btn-secondary hover-shine"href="checkout.html">check out</a>
-                </div>
-            </div>
-        </div>
+        <?php require_once('./utilities/cart.php')?>
         <script>
             function loader(id){
                 document.getElementById(id).style.display="none";
@@ -205,6 +124,7 @@
 
         <script src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/cart.js"></script>
         <script>
             <?php
                 if(isset($_GET['pid'])){

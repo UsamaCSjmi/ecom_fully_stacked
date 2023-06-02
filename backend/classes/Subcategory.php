@@ -37,21 +37,21 @@ class Subcategory
 
     public function getAllSubcat()
     {
-        $query = "SELECT * FROM sub_categories ORDER BY id ASC";
+        $query = "SELECT * FROM sub_categories WHERE status=1 ORDER BY id ASC";
         $result = $this->db->select($query);
         return $result;
     }
 
     public function getSubcatById($id)
     {
-        $query = "SELECT * FROM sub_categories WHERE id = '$id'";
+        $query = "SELECT * FROM sub_categories WHERE id = '$id' AND status=1";
         $result = $this->db->select($query);
         return $result;
     }
 
     public function getSubcatByCatId($catid)
     {
-        $query = "SELECT * FROM sub_categories WHERE categories_id = '$catid'";
+        $query = "SELECT * FROM sub_categories WHERE categories_id = '$catid' AND status=1";
         $result = $this->db->select($query);
         return $result;
     }
