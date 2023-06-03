@@ -122,7 +122,7 @@
                             <div class="product-description flexbox col center w-100">
                                 <a href="product.php?pid=<?php echo $product['id']?>">
                                     <p class="product-name"><?php echo $product['name']?></p>
-                                    <p class="vendor-name">The decor shop</p>
+                                    <p class="vendor-name"><?php echo COMPANY_NAME;?></p>
                                     <div class="product-prices flexbox center w-100">
                                         <p class="old-price">Rs. <?php echo $product['mrp']?></p>
                                         <p class="new-price">Rs. <?php echo $product['price']?></p>

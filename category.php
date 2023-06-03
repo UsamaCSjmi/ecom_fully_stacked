@@ -121,18 +121,20 @@
                             <div class="product-description flexbox col center w-100">
                                 <a href="<?php echo SITE_PATH?>/product.php?pid=<?php echo $product['id']?>">
                                     <p class="product-name"><?php echo $product['name']?></p>
-                                    <p class="vendor-name">The decor shop</p>
+                                    <p class="vendor-name"><?php echo COMPANY_NAME;?></p>
                                     <div class="product-prices flexbox center w-100">
                                         <p class="old-price">Rs. <?php echo $product['mrp']?></p>
                                         <p class="new-price">Rs. <?php echo $product['price']?></p>
                                     </div>
                                     <p class="product-savings">
-                                    Save    <?php
+                                       <?php
                                             $discount=($product['mrp']-$product['price'])*100/$product['mrp'];
                                             $discount=round($discount);
-                                            echo $discount;
+                                            if($discount > 0){
+                                                echo "Save ".$discount."%";
+
+                                            }
                                             ?>
-                                            %
                                     </p>
                                 </a>
                             </div>

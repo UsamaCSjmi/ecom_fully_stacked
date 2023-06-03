@@ -31,7 +31,7 @@
                 </div>
                 <div class="window-product-description">
                     <div class="product-description flexbox col w-100">
-                        <p class="vendor-name">The decor shop</p>
+                        <p class="vendor-name"><?php echo COMPANY_NAME;?></p>
                         <p id="p-name" class="product-name"></p>
                         <div class="product-prices flexbox w-100">
                             <p id="old-price" class="old-price"></p>

@@ -1,4 +1,9 @@
-<?php include "./config/config.php"; ?>
+<?php include "./config/config.php";
+$url = "index.php";
+if(isset($_GET['url'])){
+    $url = $_GET['url'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -108,6 +113,7 @@
         <script src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script>
+            const url = '<?php echo $url;?>';
             function user_login(){
                 var loginform = document.getElementById('login-form');
                 var errors = loginform.querySelectorAll('.error-msg');
@@ -131,7 +137,7 @@
                             if(result){
                                 if(result=="success"){
                                     loginform.querySelector('#login-success').innerText="Successfully Logged In";
-                                    window.location.href="index.php"
+                                    window.location.href=url
                                 }
                                 else if(result == "incorrect"){
                                     loginform.querySelector('#login-error').innerText="Incorrect email or password";

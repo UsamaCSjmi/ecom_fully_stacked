@@ -1,4 +1,5 @@
-<?php include "./config/config.php"; ?>
+<?php include "./config/config.php" ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,22 +12,6 @@
         <link rel="stylesheet" href="./css/responsive.css">
         <link rel="stylesheet" href="./css/style2.css">
         
-        <script src="js/jquery.min.js"></script>
-        <script src="js/index.js"></script>
-        <script src="js/cart.js"></script>
-        <script>
-            function loader(id){
-                document.getElementById(id).style.display="none";
-            }
-            $('.owl-carousel').owlCarousel({
-                loop:true,
-                autoplay:true,
-                margin:0,
-                nav:true,
-                items:1,
-                smartSpeed:1000
-            })
-        </script>
         <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
@@ -34,8 +19,21 @@
             <div class="site-preloader"></div>
         </div>
         <div class="site-wrapper flexbox col center w-100">
-            <?php require_once('./utilities/header.php')?>
-
+            <?php 
+            require_once('./utilities/header.php');
+            if(Customer::checkLogin()){
+                $user_id = Session::get('USER_ID');
+            }
+            else{
+                echo "
+                    <script>
+                        window.location.href = 'login.php?url=checkout.php'
+                    </script>
+                ";
+                die();
+            }
+            
+            ?>
             <div class="container">
                 <!-- Checkout Section Begin -->
                 <section class="checkout spad">
@@ -48,33 +46,33 @@
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <div class="checkout__form__input">
                                                 <p>First Name <span>*</span></p>
-                                                <input type="text" required>
+                                                <input type="text" id="fname" name="fname"required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6">
                                             <div class="checkout__form__input">
-                                                <p>Last Name <span>*</span></p>
-                                                <input type="text" required>
+                                                <p>Last Name <span></span></p>
+                                                <input type="text" id="lname" name="lname">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             
                                             <div class="checkout__form__input">
                                                 <p>Address <span>*</span></p>
-                                                <input type="text" placeholder="Street Address" required>
-                                                <input type="text" placeholder="Apartment. suite, unite ect ( optinal )">
+                                                <input type="text" id="street_address" name="street_address" placeholder="Street Address" required>
+                                                <input type="text" id="apartment" name="apartment" placeholder="Apartment. suite, unite ect ( optinal )">
                                             </div>
                                             <div class="checkout__form__input">
                                                 <p>Town/City <span>*</span></p>
-                                                <input type="text" required>
+                                                <input type="text" id="city" name="city" required>
                                             </div>
                                             <div class="checkout__form__input">
                                                 <p>State <span>*</span></p>
-                                                <input type="text" required>
+                                                <input type="text" id="state" name="state" required>
                                             </div>
                                             <div class="checkout__form__input">
                                                 <p>Postcode/Zip <span>*</span></p>
-                                                <input type="text" required>
+                                                <input type="text" id="zip_code" name="zip_code" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
@@ -82,7 +80,7 @@
                                                 <p>Country <span>*</span></p>
                                                 <select name="country" id="country" required>
                                                     <option value="">Select</option>
-                                                    <option value="India">India(+91)</option>
+                                                    <option value="+91">India(+91)</option>
                                                 </select>
                                                 <!-- <input type="text" value="India(+91)" disabled required> -->
                                             </div>
@@ -90,13 +88,13 @@
                                         <div class="col-lg-8 col-md-8 col-sm-8">
                                             <div class="checkout__form__input">
                                                 <p>Phone <span>*</span></p>
-                                                <input type="text"required>
+                                                <input type="text" id="phone" name="phone"required>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="checkout__form__input">
                                                 <p>Oder notes</p>
-                                                <input type="text"
+                                                <input type="text" id="order_notes" name="order_notes"
                                                 placeholder="Note about your order, e.g, special note for delivery (Optional)">
                                             </div>
                                         </div>
@@ -162,8 +160,8 @@
                                         </div>
                                         <div class="checkout__order__widget">
                                             <div class="payment_option">
-                                                <input type="radio" id="paypal" name="payment_method" value="paypal">
-                                                <label for="paypal">Paypal</label>
+                                                <input type="radio" id="razorpay" name="payment_method" value="razorpay" checked>
+                                                <label for="razorpay">RazorPay</label>
                                             </div>
                                             
                                             <div class="payment_option">
@@ -171,7 +169,7 @@
                                                 <label for="COD">COD(Currently unavailable)</label>
                                             </div>
                                         </div>
-                                        <button type="submit" onlick="order_payment"class="site-btn">Place oder</button>
+                                        <button type="button" id="submit_button" name="submit_order" onlick = "order_submit()" class="site-btn" > Place oder </button>
                                     </div>
                                 </div>
                             </div>
@@ -193,6 +191,79 @@
         </script>
         <script src="js/jquery.min.js"></script>
         <script src="js/index.js"></script>
-        <script src="js/cart.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            function order_submit(){
+                const fname = jQuery.$('#fname').val();
+                const lname = jQuery.$('#lname').val();
+                const street_address = jQuery.$('#street_address').val();
+                const apartment = jQuery.$('#apartment').val();
+                const city = jQuery.$('#city').val();
+                const zip_code = jQuery.$('#zip_code').val();
+                const country = jQuery.$('#country').val();
+                const state = jQuery.$('#state').val();
+                const phone = jQuery.$('#phone').val();
+                const order_notes = jQuery.$('#order_notes').val();
+                const total = <?php echo $total; ?>;
+                const user_id = <?php echo $user_id; ?>;
+                jQuery.$ajax({
+                    type: 'post',
+                    url:'submit_order.php';
+                    data:"submit_order=true&fname="+fname+"&lname="+lname+"&street_address="+street_address+"&apartment="+apartment+"&city="+city+"&zip_code="+zip_code+"&country="+country+"&state="+state+"&phone="+phone+"&order_notes="+order_notes+"&total="+total+"$user_id="+user_id,
+                    success:function(result){
+                        console.log(result);
+
+                        var options = {
+                            "key": "<?php echo API_KEY?>", 
+                            "amount": "<?php echo $total*100?>",
+                            "currency": "INR",
+                            "name": "<?php echo COMPANY_NAME?>",
+                            "description": "Test Transaction",
+                            "image": "<?php echo COMPANY_LOGO_URL?>",
+                            "order_id": result['id'], 
+                            "handler": function (response){
+
+                                jQuery.$ajax({
+                                    type: 'post',
+                                    url:'submit_order.php';
+                                    data:"handler_details=true&razorpay_payment_id"+response.razorpay_payment_id+"&razorpay_order_id="+response.razorpay_order_id+"&razorpay_signature="+response.razorpay_signature,
+                                    success:function(result){
+                                        console.log(result)
+                                    }
+
+                                });
+                                // alert(response.razorpay_payment_id);
+                                // alert(response.razorpay_order_id);
+                                // alert(response.razorpay_signature)
+                            },
+                            "prefill": {
+                                "name": "<?php echo $_POST['fname']?>",
+                                "contact": "<?php echo $_POST['phone']?>"
+                            },
+                            "theme": {
+                                "color": "#3399cc"
+                            }
+                        };
+                        var rzp1 = new Razorpay(options);
+                        rzp1.on('payment.failed', function (response){
+                                alert(response.error.code);
+                                alert(response.error.description);
+                                alert(response.error.source);
+                                alert(response.error.step);
+                                alert(response.error.reason);
+                                alert(response.error.metadata.order_id);
+                                alert(response.error.metadata.payment_id);
+                        });
+                        rzp1.open();
+                    } 
+                    error:function(response){
+                        console.log(response)
+                    }
+                });
+                
+
+            }
+        </script>
+
     </body>
 </html>
