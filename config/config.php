@@ -7,7 +7,7 @@ define("EMAIL","info@thedesignershome.com");
 define("WEBSITE","www.thedesignershome.com");
 define("API_KEY","rzp_test_MhrQNG2vZyjPsi");
 define("SECRET_KEY","7Y9y8srDDjGY8hYScltsiwQL");
-define("COMPANY_LOGO_URL","https://customize.thedesignershome.com/images/d_black.png");
+define("COMPANY_LOGO_URL","https://customize.thedesignershome.com/images/d_white.png");
 
 
 define('SERVER_PATH',$_SERVER['DOCUMENT_ROOT'].'/thedecorshop');

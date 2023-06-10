@@ -54,6 +54,12 @@ if(isset($_POST['type'])){
         echo $msg;
     }
 
+    elseif($type=="regReq"){
+        $user = new Customer();
+        $msg=$user->customerRegistration($_POST);
+        echo $msg;
+    }
+
     elseif($type=="logoutReq"){
         Session::init();
         echo Session::destroy();

@@ -15,7 +15,7 @@ class Order
         $this->fm = new Format();
     }
 
-    public function generateOrder($array,$user_id)
+    public function generateOrder($array)
     {
 
         $first_name = $array["fname"];
@@ -30,6 +30,7 @@ class Order
         $order_notes = $array["order_notes"];
         $payment_method = $array["payment_method"];
         $total_price = $array["total"];
+        $user_id = $array["user_id"];
 
 
         $first_name = mysqli_real_escape_string($this->db->link, ($this->fm->validation($first_name)));
@@ -48,14 +49,16 @@ class Order
         $payment_status = "Pending";
         $order_status = "Pending";
         $added_on = date('Y-m-d h:i:s');
+        $order_id = "unknown";
+        $txnid = "unknown";
 
 
-        $query = "INSERT INTO order(fname,lname,street_address,apartment,city,`state`,zipcode,country,phone,order_notes,payment_method,payment_status,order_status,total_price,user_id,added_on) VALUES('$first_name','$last_name','$street_address','$apartment','$city','$state','$zip_code','$country','$phone','$order_notes','$payment_method','$payment_status','$order_status','$total_price','$user_id','$added_on')";
+        $query = "INSERT INTO `order` (fname,lname,street_address,apartment,city,state,zip_code,country,phone,order_notes,payment_status,order_status,total_price,user_id,added_on,order_id,payment_type,txnid) VALUES('$first_name','$last_name','$street_address','$apartment','$city','$state','$zip_code','$country','$phone','$order_notes','$payment_status','$order_status',$total_price,$user_id,'$added_on','$order_id','$payment_method','$txnid')";
         $catinsert = $this->db->insert($query);
         $order_id = mysqli_insert_id($this->db->link);
         if ($catinsert) {
-            $new_order_id = "TDESHOM0"+$order_id;
-            $query = "UPDATE order SET order_id = 'new_order_id' WHERE id = $order_id";
+            $new_order_id = "TDESH000".$order_id;
+            $query = "UPDATE `order` SET order_id = '$new_order_id' WHERE id = $order_id";
             $updateOid = $this->db->update($query);
             if($updateOid){
                 return $new_order_id;
@@ -82,7 +85,8 @@ class Order
         $price = mysqli_real_escape_string($this->db->link, ($this->fm->validation($price)));
         $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
         
-        $query = "INSERT INTO order_details(order_id,product_id,qty,price) VALUES('$order_id','$product_id','$qty','$price'";
+        $query = "INSERT INTO `order_detail` ( order_id , product_id , qty , price) VALUES('$order_id',$product_id,$qty,$price)";
+        
         $catinsert = $this->db->insert($query);
         if ($catinsert) {
             return true;
@@ -91,21 +95,21 @@ class Order
         }
     }
 
-    // public function updateOrderTotal($total,$order_id)
-    // {
-    //     $total = mysqli_real_escape_string($this->db->link, ($this->fm->validation($total)));
-    //     $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
+    public function updateOrderTotal($total,$order_id)
+    {
+        $total = mysqli_real_escape_string($this->db->link, ($this->fm->validation($total)));
+        $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
 
-    //     $query = "UPDATE order_details SET 'total_amount' = $total WHERE 'order_id' = $order_id";
-    //     $catinsert = $this->db->update($query);
-    //     if ($catinsert) {
-    //         $msg = "<span class='success'>Order Details Updated Successfully</span>";
-    //         return $msg;
-    //     } else {
-    //         $msg = "<span class='error'>Order Details Not Updated</span>";
-    //         return $msg;
-    //     }
-    // }
+        $query = "UPDATE order_details SET 'total_amount' = $total WHERE 'order_id' = $order_id";
+        $catinsert = $this->db->update($query);
+        if ($catinsert) {
+            $msg = "<span class='success'>Order Details Updated Successfully</span>";
+            return $msg;
+        } else {
+            $msg = "<span class='error'>Order Details Not Updated</span>";
+            return $msg;
+        }
+    }
 
 
 

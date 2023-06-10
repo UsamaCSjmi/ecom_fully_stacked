@@ -8,15 +8,17 @@ use Razorpay\Api\Api;
 <?php
     if(isset($_POST['submit_order'])){
         include "./backend/classes/Order.php";
-        $user_id = 0;
+        // $user_id = 0;
+        // $user_id = Session::get("USER_ID");
         $order = new Order();
         $payment_method = $_POST["payment_method"]; 
         if($payment_method=="razorpay"){
 
-            $order_id = $order->generateOrder($_POST,$user_id);
+            $order_id = $order->generateOrder($_POST);
 
             // -----------------Getting Order products details-------------------- 
             include "./backend/classes/Cart.php";
+            include "./backend/classes/Product.php";
             $obj = new Cart();                                  
             $items = $obj->getCartItems();
             $subtotal = 0;
@@ -39,7 +41,7 @@ use Razorpay\Api\Api;
             }
             $gst=$subtotal*0.18;
             $total = $subtotal + $gst;
-            $order->updateOrderTotal($total,$order_id);
+            // $order->updateOrderTotal($total,$order_id);
 
 
 
@@ -53,7 +55,8 @@ use Razorpay\Api\Api;
             //Generating RZP order for later on varification
             $api = new Api(API_KEY,SECRET_KEY);
             $razorpayOrder = $api->order->create($orderData);
-            $_SESSION['order_id'] = $razorpayOrder['id'];
+            // $_SESSION['order_id'] = $razorpayOrder['id'];
+
             echo $razorpayOrder;
         }
         else{
@@ -62,9 +65,21 @@ use Razorpay\Api\Api;
         }
     }
     elseif(isset($_POST['handler_details'])){
+        $razorpay_payment_id = $_POST['razorpay_payment_id'];
+        $razorpay_order_id = $_POST['razorpay_order_id'];
+        $razorpay_signature = $_POST['razorpay_signature'];
 
-        
+        //storing on server
+        $_SESSION['razorpay_payment_id'] = $razorpay_payment_id;
+        $_SESSION['razorpay_order_id'] = $razorpay_order_id;
+        $_SESSION['razorpay_signature'] = $razorpay_signature;
 
+
+        $api = new Api(API_KEY, SECRET_KEY);
+
+        $api->utility->verifyPaymentSignature(array('razorpay_order_id' => $razorpay_order_id,'razorpay_payment_id' => $razorpay_payment_id, 'razorpay_signature' => $razorpay_signature));
+
+        echo true;
     }
     else{
         echo "Invalid Request";
@@ -72,20 +87,3 @@ use Razorpay\Api\Api;
     }
 ?>
 
-
-<script>
-
-{
-"razorpay_payment_id": "pay_29QQoUBi66xm2f",
-"razorpay_order_id": "order_9A33XWu170gUtm",
-"razorpay_signature": "9ef4dffbfd84f1318f6739a3ce19f9d85851857ae648f114332d8401e0949a3d"
-}
-
-
-
-generated_signature = hmac_sha256(order_id + "|" + razorpay_payment_id, secret);
-if (generated_signature == razorpay_signature) {
-payment is successful
-}
-
-</script>

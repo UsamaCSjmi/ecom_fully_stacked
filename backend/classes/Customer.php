@@ -28,12 +28,12 @@ class Customer
     {
         $name    	= $this->fm->validation($data['name']);
         $email   	= $this->fm->validation($data['email']);
-        $pass  		= $this->fm->validation($data['pass']);
+        $pass  		= $this->fm->validation($data['password']);
         
         $name 		= mysqli_real_escape_string($this->db->link, $name);
         $email 		= mysqli_real_escape_string($this->db->link, $email);
         $pass 		= mysqli_real_escape_string($this->db->link, md5($pass));
-
+        $added_on   = date('Y-m-d h:i:s');
 
 
         if ($name == "" || $email == "" || $pass == "") {
@@ -43,10 +43,10 @@ class Customer
         $mailquery = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
         $mailchk = $this->db->select($mailquery);
         if ($mailchk != false) {
-            $msg = "email exists";
+            $msg = "Email already exists";
             return $msg;
         } else {
-            $query = "INSERT INTO users(name, email, password) VALUES('$name', '$email', '$pass')";
+            $query = "INSERT INTO users(name, email, password,added_on) VALUES('$name', '$email', '$pass','$added_on')";
             $inserted_row = $this->db->insert($query);
             if ($inserted_row) {
                 $msg = "Success";

@@ -15,9 +15,9 @@
         <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
-        <div id="body-loader" class="loader">
+        <!-- <div id="body-loader" class="loader">
             <div class="site-preloader"></div>
-        </div>
+        </div> -->
         <div class="site-wrapper flexbox col center w-100">
             <?php 
             require_once('./utilities/header.php');
@@ -169,7 +169,9 @@
                                                 <label for="COD">COD(Currently unavailable)</label>
                                             </div>
                                         </div>
-                                        <button type="button" id="submit_button" name="submit_order" onlick = "order_submit()" class="site-btn" > Place oder </button>
+                                        <button type="button" id="submit_button" name="submit_order" onclick="order_submit()" class="site-btn" style="cursor:pointer" > Place oder </button>
+                                        <span id = "ord-error" class = "error-msg"></span>
+                                        <span id = "ord-success" class = "success-msg"></span>        
                                     </div>
                                 </div>
                             </div>
@@ -191,79 +193,91 @@
         </script>
         <script src="js/jquery.min.js"></script>
         <script src="js/index.js"></script>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <script>
             function order_submit(){
-                const fname = jQuery.$('#fname').val();
-                const lname = jQuery.$('#lname').val();
-                const street_address = jQuery.$('#street_address').val();
-                const apartment = jQuery.$('#apartment').val();
-                const city = jQuery.$('#city').val();
-                const zip_code = jQuery.$('#zip_code').val();
-                const country = jQuery.$('#country').val();
-                const state = jQuery.$('#state').val();
-                const phone = jQuery.$('#phone').val();
-                const order_notes = jQuery.$('#order_notes').val();
+                document.getElementById('ord-error').innerText="";
+                const fname = $('#fname').val();
+                const lname = $('#lname').val();
+                const street_address = $('#street_address').val();
+                const apartment = $('#apartment').val();
+                const city = $('#city').val();
+                const zip_code = $('#zip_code').val();
+                const country = $('#country').val();
+                const state = $('#state').val();
+                const phone = $('#phone').val();
+                const order_notes = $('#order_notes').val();
+                // const payment_method = $('#payment_method').val();
+                const payment_method =$('input[name="payment_method"]:checked').val();;
                 const total = <?php echo $total; ?>;
                 const user_id = <?php echo $user_id; ?>;
-                jQuery.$ajax({
-                    type: 'post',
-                    url:'submit_order.php';
-                    data:"submit_order=true&fname="+fname+"&lname="+lname+"&street_address="+street_address+"&apartment="+apartment+"&city="+city+"&zip_code="+zip_code+"&country="+country+"&state="+state+"&phone="+phone+"&order_notes="+order_notes+"&total="+total+"$user_id="+user_id,
-                    success:function(result){
-                        console.log(result);
+                if(fname == "" || street_address == "" || city == "" || state == "" || zip_code == "" || country == "" || phone == ""){
+                    // console.log("Empty fields")
+                    document.getElementById('ord-error').innerText="Please Fill required fields!";
+                }
+                else{
 
-                        var options = {
-                            "key": "<?php echo API_KEY?>", 
-                            "amount": "<?php echo $total*100?>",
-                            "currency": "INR",
-                            "name": "<?php echo COMPANY_NAME?>",
-                            "description": "Test Transaction",
-                            "image": "<?php echo COMPANY_LOGO_URL?>",
-                            "order_id": result['id'], 
-                            "handler": function (response){
-
-                                jQuery.$ajax({
-                                    type: 'post',
-                                    url:'submit_order.php';
-                                    data:"handler_details=true&razorpay_payment_id"+response.razorpay_payment_id+"&razorpay_order_id="+response.razorpay_order_id+"&razorpay_signature="+response.razorpay_signature,
-                                    success:function(result){
-                                        console.log(result)
-                                    }
-
-                                });
-                                // alert(response.razorpay_payment_id);
-                                // alert(response.razorpay_order_id);
-                                // alert(response.razorpay_signature)
-                            },
-                            "prefill": {
-                                "name": "<?php echo $_POST['fname']?>",
-                                "contact": "<?php echo $_POST['phone']?>"
-                            },
-                            "theme": {
-                                "color": "#3399cc"
-                            }
-                        };
-                        var rzp1 = new Razorpay(options);
-                        rzp1.on('payment.failed', function (response){
-                                alert(response.error.code);
-                                alert(response.error.description);
-                                alert(response.error.source);
-                                alert(response.error.step);
-                                alert(response.error.reason);
-                                alert(response.error.metadata.order_id);
-                                alert(response.error.metadata.payment_id);
-                        });
-                        rzp1.open();
-                    } 
-                    error:function(response){
-                        console.log(response)
-                    }
-                });
-                
+                    $.ajax({
+                        type: 'post',
+                        url:'submit_order.php',
+                        data:"submit_order=true&fname="+fname+"&lname="+lname+"&street_address="+street_address+"&apartment="+apartment+"&city="+city+"&zip_code="+zip_code+"&country="+country+"&state="+state+"&phone="+phone+"&order_notes="+order_notes+"&total="+total+"&user_id="+user_id+'&payment_method='+payment_method,
+                        success:function(result){
+                            console.log(result);
+    
+                            var options = {
+                                "key": "<?php echo API_KEY?>", 
+                                "amount": "<?php echo $total*100?>",
+                                "currency": "INR",
+                                "name": "<?php echo COMPANY_NAME?>",
+                                "description": "Test Transaction",
+                                "image": "<?php echo COMPANY_LOGO_URL?>",
+                                "order_id": result['id'], 
+                                "handler": function (response){
+                                    console.log("Handler Executed");
+                                    console.log(response.razorpay_payment_id);
+                                    console.log(response.razorpay_order_id);
+                                    console.log(response.razorpay_signature);
+                                    $.ajax({
+                                        type: 'post',
+                                        url:'submit_order.php',
+                                        data:"handler_details=true&razorpay_payment_id"+response.razorpay_payment_id+"&razorpay_order_id="+response.razorpay_order_id+"&razorpay_signature="+response.razorpay_signature,
+                                        success:function(result){
+                                            console.log("Handler Success Called");
+                                            console.log(result)
+                                        }
+    
+                                    });
+                                },
+                                "prefill": {
+                                    "name": fname+" "+lname,
+                                    "contact": phone
+                                },
+                                "theme": {
+                                    "color": "#3399cc"
+                                }
+                            };
+                            var rzp1 = new Razorpay(options);
+                            rzp1.on('payment.failed', function (response){
+                                    // alert(response.error.code);
+                                    // alert(response.error.description);
+                                    // alert(response.error.source);
+                                    // alert(response.error.step);
+                                    // alert(response.error.reason);
+                                    // alert(response.error.metadata.order_id);
+                                    // alert(response.error.metadata.payment_id);
+                                    console.log(response.error);
+                            });
+                            rzp1.open();
+                        },
+                        error:function(response){
+                            console.log(response)
+                        }
+                    });
+                    
+                }
 
             }
         </script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     </body>
 </html>

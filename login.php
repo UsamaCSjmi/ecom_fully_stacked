@@ -64,24 +64,29 @@ if(isset($_GET['url'])){
                                 </div>
                             </form>
                         </div>
-                        <div id="register-form " class="register-form form flexbox col center w-100">
+                        <div id="register-form" class="register-form form flexbox col center w-100">
                             <h1 class="">sign up</h1>
                             <form action="#" class="flexbox col w-100">
                                 <div class="form-control flexbox w-100 col start">
                                     <label for="name">Name</label>
-                                    <input name="name" type="text">
+                                    <input id="name" name="name" type="text">
+                                    <span id = "name-error" class = "error-msg"></span>
                                 </div>
                                 <div class="form-control flexbox w-100 col start">
                                     <label for="email">Email</label>
-                                    <input name="email" type="email">
+                                    <input id="email" name="email" type="email">
+                                    <span id = "email-error" class = "error-msg"></span>
                                 </div>
                                 <div class="form-control flexbox w-100 col start">
                                     <label for="password">Password</label>
-                                    <input name="password"type="password">
+                                    <input id="password" name="password"type="password">
+                                    <span id = "password-error" class = "error-msg"></span>
                                 </div>
                                 <div class="form-control flexbox w-100 col start">
-                                <button onclick="user_register()" class="btn btn-secondary w-100 hover-shine">Sign Up</button>
-                                    <a href="javascript:void(0)" onclick="showForm('signin')"class="btn">Already have an account</a>
+                                <button type="button" onclick="user_register()" class="btn btn-secondary w-100 hover-shine">Sign Up</button>
+                                <span id = "reg-error" class = "error-msg"></span>
+                                <span id = "reg-success" class = "success-msg"></span>        
+                                <a href="javascript:void(0)" onclick="showForm('signin')"class="btn">Already have an account</a>
                                 </div>
                             </form>
                         </div>
@@ -146,6 +151,45 @@ if(isset($_GET['url'])){
                             }
                             else{
                                 console.log("Unable to login")
+                            }
+                        }
+                    });
+                }
+            }
+            function user_register(){
+                var regform = document.getElementById('register-form');
+                var errors = regform.querySelectorAll('.error-msg');
+                for (var i=0;i<errors.length;i++)
+                    errors[i].innerText="";
+                regform.querySelector('#reg-success').innerText="";
+                var email = regform.querySelector('#email').value;
+                var password = regform.querySelector('#password').value;
+                var name = regform.querySelector('#name').value;
+                if(email === ''){
+                    regform.querySelector('#email-error').innerText="Email cannot be empty";
+                }
+                else if(password == ''){
+                    regform.querySelector('#password-error').innerText="Password cannot be empty";
+                }
+                else if(name == ''){
+                    regform.querySelector('#name-error').innerText="Name cannot be empty";
+                }
+                else{
+                    $.ajax({
+                        url:'handleAJAX.php',
+                        type:'post',
+                        data:'type=regReq&email='+email+'&password='+password+'&name='+name,
+                        success:function(result){
+                            if(result){
+                                if(result=="Success"){
+                                    regform.querySelector('#reg-success').innerText="Successfully Registered. You can now Log In"
+                                }
+                                else {
+                                    regform.querySelector('#reg-error').innerText=result;
+                                }
+                            }
+                            else{
+                                console.log("Unable to Register")
                             }
                         }
                     });
