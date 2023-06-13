@@ -15,9 +15,9 @@
         <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
-        <!-- <div id="body-loader" class="loader">
+        <div id="body-loader" class="loader">
             <div class="site-preloader"></div>
-        </div> -->
+        </div>
         <div class="site-wrapper flexbox col center w-100">
             <?php 
             require_once('./utilities/header.php');
@@ -206,12 +206,10 @@
                 const state = $('#state').val();
                 const phone = $('#phone').val();
                 const order_notes = $('#order_notes').val();
-                // const payment_method = $('#payment_method').val();
                 const payment_method =$('input[name="payment_method"]:checked').val();;
                 const total = <?php echo $total; ?>;
                 const user_id = <?php echo $user_id; ?>;
                 if(fname == "" || street_address == "" || city == "" || state == "" || zip_code == "" || country == "" || phone == ""){
-                    // console.log("Empty fields")
                     document.getElementById('ord-error').innerText="Please Fill required fields!";
                 }
                 else{
@@ -221,8 +219,6 @@
                         url:'submit_order.php',
                         data:"submit_order=true&fname="+fname+"&lname="+lname+"&street_address="+street_address+"&apartment="+apartment+"&city="+city+"&zip_code="+zip_code+"&country="+country+"&state="+state+"&phone="+phone+"&order_notes="+order_notes+"&total="+total+"&user_id="+user_id+'&payment_method='+payment_method,
                         success:function(result){
-                            console.log(result);
-    
                             var options = {
                                 "key": "<?php echo API_KEY?>", 
                                 "amount": "<?php echo $total*100?>",
@@ -230,19 +226,23 @@
                                 "name": "<?php echo COMPANY_NAME?>",
                                 "description": "Test Transaction",
                                 "image": "<?php echo COMPANY_LOGO_URL?>",
-                                "order_id": result['id'], 
+                                "order_id": result.trim(), 
                                 "handler": function (response){
-                                    console.log("Handler Executed");
-                                    console.log(response.razorpay_payment_id);
-                                    console.log(response.razorpay_order_id);
-                                    console.log(response.razorpay_signature);
+                                    razorpay_payment_id = response.razorpay_payment_id;
+                                    razorpay_order_id = response.razorpay_order_id;
+                                    razorpay_signature = response.razorpay_signature;
                                     $.ajax({
                                         type: 'post',
                                         url:'submit_order.php',
-                                        data:"handler_details=true&razorpay_payment_id"+response.razorpay_payment_id+"&razorpay_order_id="+response.razorpay_order_id+"&razorpay_signature="+response.razorpay_signature,
+                                        data:"handler_details=true&razorpay_payment_id="+razorpay_payment_id+"&razorpay_order_id="+razorpay_order_id+"&razorpay_signature="+razorpay_signature,
                                         success:function(result){
-                                            console.log("Handler Success Called");
                                             console.log(result)
+                                            if(result!="error"){
+                                                window.location.href = "success.php";
+                                            }
+                                            else{
+                                                window.location.href = "failure.php";
+                                            }
                                         }
     
                                     });
@@ -257,19 +257,22 @@
                             };
                             var rzp1 = new Razorpay(options);
                             rzp1.on('payment.failed', function (response){
-                                    // alert(response.error.code);
-                                    // alert(response.error.description);
-                                    // alert(response.error.source);
-                                    // alert(response.error.step);
-                                    // alert(response.error.reason);
-                                    // alert(response.error.metadata.order_id);
-                                    // alert(response.error.metadata.payment_id);
+                                    alert(response.error.code);
+                                    alert(response.error.description);
+                                    alert(response.error.source);
+                                    alert(response.error.step);
+                                    alert(response.error.reason);
+                                    alert(response.error.metadata.order_id);
+                                    alert(response.error.metadata.payment_id);
                                     console.log(response.error);
-                            });
-                            rzp1.open();
-                        },
-                        error:function(response){
-                            console.log(response)
+                                    window.location.href = "failure.php";
+                                });
+                                rzp1.open();
+                            },
+                            error:function(response){
+                                console.log(response)
+                                alert(response);
+                                window.location.href = "failure.php";
                         }
                     });
                     

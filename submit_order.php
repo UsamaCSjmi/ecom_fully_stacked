@@ -15,6 +15,7 @@ use Razorpay\Api\Api;
         if($payment_method=="razorpay"){
 
             $order_id = $order->generateOrder($_POST);
+            $_SESSION['order_id']=$order_id;
 
             // -----------------Getting Order products details-------------------- 
             include "./backend/classes/Cart.php";
@@ -43,10 +44,8 @@ use Razorpay\Api\Api;
             $total = $subtotal + $gst;
             // $order->updateOrderTotal($total,$order_id);
 
-
-
             $orderData = [
-                'receipt'         => $order_id,
+                // 'receipt'         => $order_id,
                 'amount'          => $total*100, // Total rupees in paise
                 'currency'        => 'INR'
             ];
@@ -55,31 +54,34 @@ use Razorpay\Api\Api;
             //Generating RZP order for later on varification
             $api = new Api(API_KEY,SECRET_KEY);
             $razorpayOrder = $api->order->create($orderData);
-            // $_SESSION['order_id'] = $razorpayOrder['id'];
+            $_SESSION['razorpayOrder'] = $razorpayOrder['id'];
 
-            echo $razorpayOrder;
+            echo $razorpayOrder['id'];
         }
         else{
             echo "Payment Method Not Available";
             die();
         }
     }
-    elseif(isset($_POST['handler_details'])){
+    else if(isset($_POST['handler_details'])&&isset($_POST['razorpay_payment_id'])&&isset($_POST['razorpay_order_id'])&&isset($_POST['razorpay_signature'])){
         $razorpay_payment_id = $_POST['razorpay_payment_id'];
         $razorpay_order_id = $_POST['razorpay_order_id'];
         $razorpay_signature = $_POST['razorpay_signature'];
 
-        //storing on server
-        $_SESSION['razorpay_payment_id'] = $razorpay_payment_id;
-        $_SESSION['razorpay_order_id'] = $razorpay_order_id;
-        $_SESSION['razorpay_signature'] = $razorpay_signature;
-
+        $_SESSION['razorpay_payment_id']=$razorpay_payment_id;
 
         $api = new Api(API_KEY, SECRET_KEY);
+        $result = $api->utility->verifyPaymentSignature(array('razorpay_order_id' => $_SESSION['razorpayOrder'],'razorpay_payment_id' => $razorpay_payment_id, 'razorpay_signature' => $razorpay_signature));
 
-        $api->utility->verifyPaymentSignature(array('razorpay_order_id' => $razorpay_order_id,'razorpay_payment_id' => $razorpay_payment_id, 'razorpay_signature' => $razorpay_signature));
-
-        echo true;
+        if($result==""){
+            include "./backend/classes/Order.php";
+            $obj = new Order();
+            $order_id = $_SESSION['order_id'];
+            echo $obj->updateOrder($order_id,"Success",$razorpay_payment_id);
+        }
+        else{
+            echo "error";
+        }
     }
     else{
         echo "Invalid Request";

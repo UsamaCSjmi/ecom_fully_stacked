@@ -213,3 +213,35 @@ function total_cart_items(){
         }
     });
 }
+
+
+function submit_contact(){
+    var response = document.getElementById('reponse_msg');
+    response.innerText = "";
+    const email = $('#email').val();
+    const name = $('#name').val();
+    const phone = $('#mobile').val();
+    const msg = $('#msg').val();
+    if(email == "" || name == "" || phone == "" || msg == ""){
+        response.innerText = "Fields cannot be empty";
+        response.classList.remove("success-msg");
+        response.classList.add("error-msg");
+    }
+    else{
+
+        jQuery.ajax({
+            url:'./backend/middleware/manageContact.php',
+            type:'post',
+            data:'email='+email+'&name='+name+'&phone='+phone+'&msg='+msg+'&type=contact',
+            success:function(result){
+                console.log(result)
+                response.innerText = "Success";
+                response.classList.remove("error-msg");
+                response.classList.add("success-msg");
+            }
+        });
+
+    }
+
+
+}

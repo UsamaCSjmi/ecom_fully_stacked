@@ -16,32 +16,30 @@ require 'top.inc.php';
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Order Date</th>
-                                    <th>Address</th>
                                     <th>Payment Type </th>
                                     <th>Payment Status </th>
+                                    <th>Transaction ID </th>
                                     <th>Order Status</th>
+                                    <th>Order Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $res=mysqli_query($conn,"select `order`.*, order_status.name as order_status_str from `order`, order_status where order_status.id=`order`.order_status");
+                                $res=mysqli_query($conn,"select * from `order` ");
                                 while($row=mysqli_fetch_assoc($res)){
                                 ?>
                                 <tr>
                                     <td>
-                                        <a href="order_master_detail.php?id=<?php echo $row['id'];?>"><?php echo $row['id'];?></a>
+                                        <a href="order_master_detail.php?id=<?php echo $row['order_id'];?>"><?php echo $row['order_id'];?></a>
                                         <br>
                                         <a href="<?php echo SITE_PATH?>/order_pdf.php?id=<?php echo $row['id'];?>">PDF</a>
                                     </td>
                                     <td><?php echo $row['added_on'];?></td>
-                                    <td>  
-                                            <?php echo $row['address'];?><br>
-                                            <?php echo $row['city'];?><br>
-                                            <?php echo $row['pincode'];?>
-                                    </td>
                                     <td><?php echo $row['payment_type'];?></td>
                                     <td><?php echo $row['payment_status'];?></td>
-                                    <td><?php echo $row['order_status_str'];?></td>
+                                    <td><?php echo $row['txnid'];?></td>
+                                    <td><?php echo $row['order_status'];?></td>
+                                    <td><?php echo $row['total_price'];?></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>

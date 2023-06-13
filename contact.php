@@ -1,4 +1,4 @@
-<?php include "./config/config.php"; ?>
+<?php include "./config/config.php";?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -28,7 +28,7 @@
                     <div class="container flexbox col center">
                         <div class="ask-us-outer flexbox col center collapsible w-100">
                             <div id="ask-us-inner" class="ask-us-inner container form-open">
-                                <form action="#" class="ask-us w-100 flexbox col start-even">
+                                <form class="ask-us w-100 flexbox col start-even">
                                     <div class="flexbox input-row w-100">
                                         <div class="input-item flexbox col start-even">
                                             <label for="name">Name</label>
@@ -45,11 +45,12 @@
                                     </div>
                                     <div class="input-item flexbox col start-even">
                                         <label for="message">Message</label>
-                                        <textarea name="message" id="" rows="5"></textarea>
+                                        <textarea name="message" id="msg" rows="5"></textarea>
                                     </div>
                                     <div class="input-item w-100">
-                                        <input type="submit" class="btn btn-secondary hover-shine" value="Send">    
+                                        <input type="button" name="submit" onclick="submit_contact()" class="btn btn-secondary hover-shine" value="Send">    
                                     </div>
+                                    <p id="reponse_msg" class="w-100"></p>
                                 </form>
                             </div>
                         </div>

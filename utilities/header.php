@@ -205,6 +205,11 @@ $getCat2 = $cat2->getAllCat();
                     <li class="navItem">
                         <a class="navLink" href="<?php echo SITE_PATH?>/contact.php">Contact Us</a>
                     </li>
+                    <?php if(Customer::checkLogin()){ ?>
+                    <li class="navItem">
+                        <a class="navLink" href="<?php echo SITE_PATH?>/order.php">My Orders</a>
+                    </li>
+                    <?php } ?>
                     
                 </ul> 
                 

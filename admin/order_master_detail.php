@@ -1,10 +1,12 @@
 <?php
 require 'top.inc.php';
 $order_id=get_safe_value($conn,$_GET['id']);
+
 if(isset($_POST['update_order_status'])){
     $update_order_status=$_POST['update_order_status'];
-    mysqli_query($conn,"update `order` set order_status='$update_order_status' where id='$order_id'");
+    mysqli_query($conn,"update `order` set order_status='$update_order_status' where order_id='$order_id'");
 }
+$order=mysqli_fetch_assoc(mysqli_query($conn,"select * from `order` where order_id = '$order_id' "));
 ?>
 <div class="content pb-0">
     <div class="orders">
@@ -12,7 +14,7 @@ if(isset($_POST['update_order_status'])){
             <div class="col-xl-12">
                 <div class="card">
                 <div class="card-body">
-                    <h4 class="box-title">Order Detail </h4>
+                    <h4 class="box-title">Order Detail - <?php echo $order['order_id']; ?></h4>
                 </div>
                 <div class="card-body--">
                     <div class="table-stats order-table ov-h">
@@ -29,12 +31,9 @@ if(isset($_POST['update_order_status'])){
                             <tbody>
                             <?php
                                 $cart_subtotal=0;
-                                $tax=0.12;
-                                $res=mysqli_query($conn,"select distinct(order_detail.id), order_detail.*, product.name, product.image, `order`.address, `order`.city, `order`.pincode from order_detail, product, `order` where order_detail.order_id='$order_id' and order_detail.product_id=product.id");
+                                $tax=0.18;
+                                $res=mysqli_query($conn,"select order_detail.*, product.name, product.image from order_detail, product where order_detail.order_id = '$order_id' and order_detail.product_id=product.id");
                                 while($row=mysqli_fetch_assoc($res)){
-                                    $address=$row['address'];
-                                    $city=$row['city'];
-                                    $pincode=$row['pincode'];
                                     $cart_subtotal=$cart_subtotal+($row['price']*$row['qty']);
                                 ?>
                                 <tr>
@@ -56,7 +55,7 @@ if(isset($_POST['update_order_status'])){
                                 </tr>
                                 <tr>
                                     <td colspan="3"></td>
-                                    <td >GST@12%</td>
+                                    <td >GST@18%</td>
                                     <td ><?php echo $taxAmt ;?></td>
                                 </tr>
                                 <tr>
@@ -66,17 +65,36 @@ if(isset($_POST['update_order_status'])){
                                 </tr>
                                 <tr>
                                     <td colspan="5">
-                                        <strong>Address : </strong>
-                                        <?php echo "   ".$address." , ".$city." - ".$pincode;?><br>
+                                        <strong>Street Address : </strong>
+                                        <?php echo "   ".$order['street_address']."  <br/>
+                                        <strong>Apartment : </strong>".$order['apartment']."  <br/>
+                                        <strong>City : </strong>".$order['city']."  </br>
+                                        <strong>Zip Code : </strong>".$order['zip_code']."  <br/>
+                                        <strong>State : </strong>".$order['state'];?><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <strong>Name : </strong>
+                                        <?php echo $order['fname']." ".$order['lname']; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <strong>Phone : </strong>
+                                        <?php echo "+".$order['country']."-".$order['phone']; ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <strong>Order Notes : </strong>
+                                        <?php echo $order['order_notes']; ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="5">
                                         <strong>Order Status : </strong>
-                                        <?php
-                                        $order_status_arr=mysqli_fetch_assoc(mysqli_query($conn,"select order_status.name from order_status, `order` where `order`.id='$order_id' and `order`.order_status=order_status.id"));
-                                        echo $order_status_arr['name'];
-                                ?>
+                                        <?php echo $order['order_status']; ?>
                                     </td>
                                 </tr>
                                 <tr>

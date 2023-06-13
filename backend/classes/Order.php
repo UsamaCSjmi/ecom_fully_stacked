@@ -95,28 +95,45 @@ class Order
         }
     }
 
-    public function updateOrderTotal($total,$order_id)
+    public function updateOrder($order_id,$payment_status,$txnid)
     {
-        $total = mysqli_real_escape_string($this->db->link, ($this->fm->validation($total)));
+        $payment_status = mysqli_real_escape_string($this->db->link, ($this->fm->validation($payment_status)));
         $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
+        $txnid = mysqli_real_escape_string($this->db->link, ($this->fm->validation($txnid)));
 
-        $query = "UPDATE order_details SET 'total_amount' = $total WHERE 'order_id' = $order_id";
-        $catinsert = $this->db->update($query);
-        if ($catinsert) {
-            $msg = "<span class='success'>Order Details Updated Successfully</span>";
+        $query = "UPDATE `order` SET payment_status = '$payment_status' , txnid = '$txnid' WHERE order_id = '$order_id'";
+        $insert = $this->db->update($query);
+        if ($insert) {
+            $msg = "successfully updated";
             return $msg;
         } else {
-            $msg = "<span class='error'>Order Details Not Updated</span>";
+            $msg = "Not updated";
             return $msg;
         }
     }
 
-
-
-    public function getAllCat()
-    {
-        $query = "SELECT * FROM categories WHERE status=1 ORDER BY id ASC";
+    public function getOrdersByUserId($user_id){
+        $user_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($user_id)));
+        $query = "SELECT * FROM `order` WHERE user_id = $user_id";
         $result = $this->db->select($query);
         return $result;
     }
+   
+    public function getOrderByOrderId($order_id){
+        $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
+        $query = "SELECT * FROM `order` WHERE order_id = '$order_id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function getOrdersDetailsByOrderId($order_id){
+        $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
+        $query = "SELECT order_detail.*, product.name, product.image FROM order_detail, product WHERE order_id = '$order_id' AND order_detail.product_id = product.id";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
+
+  
 }
