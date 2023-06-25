@@ -167,8 +167,15 @@
 
             <div class="container">
                 <div class="about-us w-100 flexbox col start-even">
-                    <h1 class="about-us-head">Welcome to <?php echo COMPANY_NAME?></h1>
-                    <?php include "./utilities/about.php";?>
+                    <div class="about-content">
+                        <?php 
+                        require_once("./backend/classes/Details.php");
+                        $det = new Details();
+                        $res= $det->getContent('About');
+                        $res = mysqli_fetch_assoc($res);
+                        echo $res['content'];
+                        ?>
+                    </div>
                 </div>
             </div>
             <?php require_once('./utilities/footer.php')?>

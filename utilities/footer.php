@@ -26,7 +26,7 @@
                         <p class="footer-heading">briefs</p>
                         <div class="footer-navigation">
                             <ul class="flexbox col start">
-                                <li><a href="<?php echo SITE_PATH?>/about.html">About Us</a></li>
+                                <li><a href="<?php echo SITE_PATH?>/about.php">About Us</a></li>
                                 <li><a href="<?php echo SITE_PATH?>/contact.php">Reach Us</a></li>
                             </ul>
                         </div>
@@ -71,12 +71,13 @@
                 <a href="">
                     <div class="logo">
                         <img class="logo-image"src="./images/d_white.png" alt="logo">
+                        <p class="logo-para">The</p>
                         <p class="logo-head">Designers</p>
                         <p class="logo-para">Home</p>
                     </div>
                 </a>
                 <div class="sponsership w-100 flexbox center">
-                    <p class="company">&copy; Designers Home 2023</p>
+                    <p class="company">&copy; The Designers Home 2023</p>
                     <p class="company">&nbsp;|&nbsp; Powered By : &nbsp;</p>
                     <a href="https://startechworld.com/" target="_blank">StarTech World</a>
                 </div>

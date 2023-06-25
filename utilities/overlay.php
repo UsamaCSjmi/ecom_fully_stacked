@@ -37,7 +37,7 @@
                     <p id="material" class="detail "></p>
                     <p id="finish" class="detail "></p>
                     <p class="detail warranty">ONE YEAR WARRANTY ON MOVEMENT MACHINE</p>
-                    <p class="ready-time">As We Make Fresh Piece-Dispatch Within 3 TO 5 Days...!</p>
+                    <p id="making-time" class="ready-time">As We Make Fresh Piece-Dispatch Within 3 TO 5 Days...!</p>
                     <div class="ask-us-outer flexbox col center collapsible w-100">
                         <button onclick="collapseForm()" class="collapse-form-btn btn w-100">
                             Ask a question

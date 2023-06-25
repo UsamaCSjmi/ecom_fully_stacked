@@ -54,6 +54,12 @@ else{
 				      <li class="menu-item-has-children dropdown">
                      <a href="contact_us.php" > Contact Us</a>
                   </li>
+				      <li class="menu-item-has-children dropdown">
+                     <a href="store_details.php" >Store Details</a>
+                  </li>
+				      <li class="menu-item-has-children dropdown">
+                     <a href="change-password.php" >Change Password</a>
+                  </li>
                </ul>
             </div>
          </nav>
@@ -62,8 +68,6 @@ else{
          <header id="header" class="header">
             <div class="top-left">
                <div class="navbar-header">
-                  <!-- <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="Logo"></a> -->
-                  <!-- <a class="navbar-brand hidden" href="index.html"><img src="images/logo2.png" alt="Logo"></a> -->
                   <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
                </div>
             </div>

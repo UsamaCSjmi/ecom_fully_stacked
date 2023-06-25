@@ -7,6 +7,7 @@ $sub_categories_id='';
 $name='';
 $mrp='';
 $price='';
+$making_time='';
 $size='';
 $material='';
 $finish='';
@@ -48,6 +49,7 @@ if(isset($_GET['id']) && $_GET['id']!=''){
         $name=$row['name'];
         $mrp=$row['mrp'];
         $price=$row['price'];
+        $making_time=$row['making_time'];
         $size=$row['size'];
         $material=$row['material'];
         $finish=$row['finish'];
@@ -79,6 +81,7 @@ if(isset($_POST['submit'])){
     $name = get_safe_value($conn, $_POST['name']);
     $mrp = get_safe_value($conn, $_POST['mrp']);
     $price = get_safe_value($conn, $_POST['price']);
+    $making_time = get_safe_value($conn, $_POST['making_time']);
     $size = get_safe_value($conn, $_POST['size']);
     $material = get_safe_value($conn, $_POST['material']);
     $finish = get_safe_value($conn, $_POST['finish']);
@@ -125,17 +128,17 @@ if(isset($_POST['submit'])){
             if($_FILES['image']['name']!=''){
                 $image=rand(111111111,999999999).'_'.$_FILES['image']['name'];
                 move_uploaded_file($_FILES['image']['tmp_name'],PRODUCT_IMAGE_SERVER_PATH.$image);
-                $update_sql="update product set categories_id='$categories_id',sub_categories_id= NULLIF('$sub_categories_id',''),name='$name',mrp='$mrp',price='$price',size='$size',material='$material',finish='$finish',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword',image='$image' where id='$id'";
+                $update_sql="update product set categories_id='$categories_id',sub_categories_id= NULLIF('$sub_categories_id',''),name='$name',mrp='$mrp',price='$price',making_time='$making_time',size='$size',material='$material',finish='$finish',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword',image='$image' where id='$id'";
             }
             else{
-                $update_sql="update product set categories_id='$categories_id',sub_categories_id= NULLIF('$sub_categories_id','') ,name='$name',mrp='$mrp',price='$price',size='$size',material='$material',finish='$finish',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword'where id='$id'";
+                $update_sql="update product set categories_id='$categories_id',sub_categories_id= NULLIF('$sub_categories_id','') ,name='$name',mrp='$mrp',price='$price',making_time='$making_time',size='$size',material='$material',finish='$finish',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword'where id='$id'";
             }
             mysqli_query($conn,$update_sql);
         }
         else{
             $image=rand(111111111,999999999).'_'.$_FILES['image']['name'];
             move_uploaded_file($_FILES['image']['tmp_name'],PRODUCT_IMAGE_SERVER_PATH.$image);
-            mysqli_query($conn,"insert into product (categories_id,sub_categories_id,name,mrp,price,size,material,finish,short_desc,description,meta_title,meta_desc,meta_keyword,status,image) values('$categories_id',NULLIF('$sub_categories_id',''),'$name','$mrp','$price','$size','$material','$finish','$short_desc','$description','$meta_title','$meta_desc','$meta_keyword','1','$image')");
+            mysqli_query($conn,"insert into product (categories_id,sub_categories_id,name,mrp,price,making_time,size,material,finish,short_desc,description,meta_title,meta_desc,meta_keyword,status,image) values('$categories_id',NULLIF('$sub_categories_id',''),'$name','$mrp','$price','$making_time','$size','$material','$finish','$short_desc','$description','$meta_title','$meta_desc','$meta_keyword','1','$image')");
             $id=mysqli_insert_id($conn);
         }
         // Product Multiple images start
@@ -226,6 +229,10 @@ if(isset($_POST['submit'])){
                                     <div class="col-lg-3">
                                         <label for="price" class=" form-control-label">Price</label>
                                         <input type="text" name="price" placeholder="Enter Product Price" class="form-control" required value="<?php echo $price?>">
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <label for="making_time" class=" form-control-label">Price</label>
+                                        <input type="text" name="making_time" placeholder="Enter Making Time" class="form-control" required value="<?php echo $making_time?>">
                                     </div>
                                 </div>
                             </div>

@@ -14,7 +14,7 @@ session_start();
         <link rel="stylesheet" href="./css/loaders.css">
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
-        <title>The Decor Shop</title>
+        <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
         <div id="body-loader" class="loader">
@@ -26,7 +26,12 @@ session_start();
                 <div class=" container about-us w-100 flexbox col start-even">
                     <h1 class="page-head w-100 center error-msg">Failed to Place Order</h1>
                     <p>
-                        Order Id : <?php echo $_SESSION['order_id']?>
+                        Order Id : <?php
+                        
+                        include_once "./backend/classes/Order.php";
+                        $ord = new Order();
+                        $ord->updateFailedOrder($_SESSION['order_id']);
+                        echo $_SESSION['order_id']?>
                     </p>
                 </div>
             </div>

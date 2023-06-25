@@ -58,6 +58,7 @@ function productQuickView(id){
                 document.getElementById('finish').innerText="Finish : "+result['finish'];
                 document.getElementById('main-image').src="images/product/"+result['image'];
                 document.getElementById('sub-1').src="images/product/"+result['image'];
+                document.getElementById('making-time').innerText="As We Make Fresh Piece-Dispatch Within "+result['making_time']+"...!";
                 document.getElementById('add-to-cart-btn').setAttribute("onclick","manage_cart("+id+",'add')");
                 document.getElementById('buy-now-btn').setAttribute("onclick","buyNow()");
                 
@@ -244,4 +245,11 @@ function submit_contact(){
     }
 
 
+}
+
+function search(){
+    keyword = document.getElementById('keyword').value;
+    if(keyword != ''){
+        window.location.href="category.php?keyword="+keyword;
+    }
 }

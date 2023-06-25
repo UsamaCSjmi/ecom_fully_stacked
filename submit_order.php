@@ -28,7 +28,7 @@ use Razorpay\Api\Api;
                     $product = new Product();
                     $getProduct = $product->getProById($pid);
                     $item = $getProduct->fetch_assoc();
-                    $amount = $item['price']*$qty;
+                    $amount = $item['price']*$qty*100/118;
                     $subtotal = $subtotal + $amount;
                     $order_details = array("product_id"=>$pid,"qty"=>$qty,"price"=>$item['price'],"order_id"=>$order_id);
 

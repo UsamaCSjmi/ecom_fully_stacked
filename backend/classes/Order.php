@@ -111,7 +111,19 @@ class Order
             return $msg;
         }
     }
-
+    public function updateFailedOrder($order_id){
+        $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
+       
+        $query = "UPDATE `order` SET payment_status = 'Failed' , txnid = 'Not Available', order_status='Cancelled' WHERE order_id = '$order_id'";
+        $insert = $this->db->update($query);
+        if ($insert) {
+            $msg = "successfully updated";
+            return $msg;
+        } else {
+            $msg = "Not updated";
+            return $msg;
+        }
+    }
     public function getOrdersByUserId($user_id){
         $user_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($user_id)));
         $query = "SELECT * FROM `order` WHERE user_id = $user_id";

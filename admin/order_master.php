@@ -32,13 +32,17 @@ require 'top.inc.php';
                                     <td>
                                         <a href="order_master_detail.php?id=<?php echo $row['order_id'];?>"><?php echo $row['order_id'];?></a>
                                         <br>
-                                        <a href="<?php echo SITE_PATH?>/order_pdf.php?id=<?php echo $row['id'];?>">PDF</a>
+                                        <!-- <a href="<?php //echo SITE_PATH?>/order_pdf.php?id=<?php //echo $row['id'];?>">PDF</a> -->
                                     </td>
                                     <td><?php echo $row['added_on'];?></td>
                                     <td><?php echo $row['payment_type'];?></td>
-                                    <td><?php echo $row['payment_status'];?></td>
+                                    <td <?php if($row['payment_status']=="Success") echo "class='text-success'"; elseif($row['payment_status']=="Pending")echo "class='text-warning'";else echo "class='text-danger'"; ?> >
+                                        <?php echo $row['payment_status'];?>
+                                    </td>
                                     <td><?php echo $row['txnid'];?></td>
-                                    <td><?php echo $row['order_status'];?></td>
+                                    <td <?php if($row['order_status']=="Pending") echo "class='text-danger'"; elseif($row['order_status']=="Processing")echo "class='text-warning'";elseif($row['order_status']=="Dispatched")echo "class='text-warning'";elseif($row['order_status']=="Cancelled")echo "class='btn btn-danger'";else echo "class='text-success'"; ?> >
+                                        <?php echo $row['order_status'];?>
+                                    </td>
                                     <td><?php echo $row['total_price'];?></td>
                                 </tr>
                                 <?php } ?>

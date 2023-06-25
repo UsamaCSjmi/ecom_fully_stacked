@@ -95,6 +95,7 @@ $getCat2 = $cat2->getAllCat();
                         <a href="index.php">
                             <div class="logo">
                                 <img class="logo-image"src="./images/d_white.png" alt="logo">
+                                <p class="logo-para">THE</p>
                                 <p class="logo-head">DESIGNERS</p>
                                 <p class="logo-para">HOME</p>
                             </div>
@@ -231,7 +232,8 @@ $getCat2 = $cat2->getAllCat();
                     </div>
                     <div class="mid-inner-head">
                         <div class="searchInput w-100">
-                            <input type="text" placeholder="Search Here ...">
+                            <input type="text" id="keyword" placeholder="Search Here ...">
+                            <img onclick="search()" id="search-btn" src="icons/search.svg" alt="search">
                         </div>
                     </div>
                     <div class="right-inner-head flexbox center">

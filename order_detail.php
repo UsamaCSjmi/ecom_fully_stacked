@@ -71,7 +71,7 @@ $order_id=$_GET['order_id'];
                                                 $i=1;
                                                 if($order_details)
                                                 while($row = $order_details->fetch_assoc()){
-                                                    $cart_subtotal=$cart_subtotal+($row['price']*$row['qty']);
+                                                    $cart_subtotal=$cart_subtotal+($row['price']*$row['qty']*100/118);
                                                 ?>
                                                 
                                                 
@@ -79,9 +79,9 @@ $order_id=$_GET['order_id'];
                                     <td><?php echo $i ?></td>
                                     <td><a href="product.php?pid=<?php echo $row['product_id'];?>"><img src="<?php echo PRODUCT_IMAGE_SITE_PATH."/".$row['image'];?>" alt="" style="margin-right: 10px;max-width: 45px;" /></a></td>
                                     <td class="product-name"><a href="product.php?pid=<?php echo $row['product_id'];?>"><?php echo $row['name'];?></a></td>
-                                    <td ><?php echo $row['price'];?></td>
+                                    <td ><?php echo round($row['price']*100/118,2);?></td>
                                     <td ><?php echo $row['qty'];?></td>
-                                    <td ><?php echo $row['price']*$row['qty'];?></td>
+                                    <td ><?php echo round($row['price']*$row['qty']*100/118,2);?></td>
                                 </tr>
                                 <?php
                                  $i++;
@@ -92,17 +92,17 @@ $order_id=$_GET['order_id'];
                                 <tr>
                                     <td colspan="3"></td>
                                     <td >Sub Total</td>
-                                    <td ><?php echo $cart_subtotal ;?></td>
+                                    <td ><?php echo round($cart_subtotal,2) ;?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"></td>
                                     <td >GST@18%</td>
-                                    <td ><?php echo $taxAmt ;?></td>
+                                    <td ><?php echo round($taxAmt,2) ;?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"></td>
                                     <td >Total</td>
-                                    <td><?php echo $cart_total ;?></td>
+                                    <td><?php echo round($cart_total,2) ;?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="5">

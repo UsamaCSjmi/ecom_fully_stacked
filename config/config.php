@@ -1,12 +1,22 @@
 <?php
+
+
 define('COMPANY_NAME',"The Designers Home");
 define('OWNER_NAME',"Mohd. Shahnawaz");
 define("MOBILE","7453003650"); 
 define("ADDRESS","KISROL THANA NAGPHANI PANCHMUKHI MANDIR WALI GALI GANGA MANDIR, Moradabad, Uttar Pradesh, 244001");
 define("EMAIL","info@thedesignershome.com");
 define("WEBSITE","www.thedesignershome.com");
-define("API_KEY","rzp_test_MhrQNG2vZyjPsi");
-define("SECRET_KEY","7Y9y8srDDjGY8hYScltsiwQL");
+
+
+// define("API_KEY","rzp_test_MhrQNG2vZyjPsi");
+// define("SECRET_KEY","7Y9y8srDDjGY8hYScltsiwQL");
+
+
+define("API_KEY","rzp_test_lJOP1aMcHfrroE");
+define("SECRET_KEY","VcdOcSH156jkgiS0TrDCSYwg");
+
+
 define("COMPANY_LOGO_URL","https://customize.thedesignershome.com/images/d_white.png");
 
 

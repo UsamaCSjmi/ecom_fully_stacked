@@ -14,7 +14,7 @@ session_start();
         <link rel="stylesheet" href="./css/loaders.css">
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
-        <title>The Decor Shop</title>
+        <title><?php echo COMPANY_NAME?></title>
     </head>
     <body onload="loader('body-loader')">
         <div id="body-loader" class="loader">

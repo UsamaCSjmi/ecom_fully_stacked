@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="./css/responsive.css">
         <link rel="stylesheet" href="./css/style2.css">
         
-        <title><?php echo COMPANY_NAME?></title>
+        <title><?php echo COMPANY_NAME?> - Checkout</title>
     </head>
     <body onload="loader('body-loader')">
         <div id="body-loader" class="loader">
@@ -25,12 +25,7 @@
                 $user_id = Session::get('USER_ID');
             }
             else{
-                echo "
-                    <script>
-                        window.location.href = 'login.php?url=checkout.php'
-                    </script>
-                ";
-                die();
+                $user_id=NULL;
             }
             
             ?>
@@ -128,7 +123,8 @@
                                                             $product = new Product();
                                                             $getProduct = $product->getProById($pid);
                                                             $item = $getProduct->fetch_assoc();
-                                                            $amount = $item['price']*$qty;
+                                                            // $amount = $item['price']*$qty;
+                                                            $amount = $item['price']*100*$qty/118;
                                                             $subtotal = $subtotal + $amount;
 
                                                     
@@ -138,9 +134,9 @@
                                                                 <img src="images/product/<?php echo $item['image']?>" alt="">
                                                             </td>
                                                             <td class="table-data"><?php echo $item['name']?></td>
-                                                            <td class="table-data"><?php echo $item['price']?></td>
+                                                            <td class="table-data"><?php echo round($item['price']*100/118,2)?></td>
                                                             <td class="table-data "><?php echo $qty?> </td>
-                                                            <td class="table-data table-total">Rs. <?php echo $amount?></td>
+                                                            <td class="table-data table-total">Rs. <?php echo round($amount,2)?></td>
                                                         </tr>
                                                     <?php
                                                         }
@@ -153,9 +149,9 @@
                                         </div>
                                         <div class="checkout__order__total">
                                             <ul>
-                                                <li>Subtotal <span>Rs. <?php echo $subtotal?></span></li>
-                                                <li>GST @ 18% <span>Rs. <?php echo $gst?></span></li>
-                                                <li>Total <span>Rs. <?php echo $total?></span></li>
+                                                <li>Subtotal <span>Rs. <?php echo round($subtotal,2)?></span></li>
+                                                <li>GST @ 18% <span>Rs. <?php echo round($gst,2)?></span></li>
+                                                <li>Total <span>Rs. <?php echo round($total,2)?></span></li>
                                             </ul>
                                         </div>
                                         <div class="checkout__order__widget">
@@ -208,7 +204,7 @@
                 const order_notes = $('#order_notes').val();
                 const payment_method =$('input[name="payment_method"]:checked').val();;
                 const total = <?php echo $total; ?>;
-                const user_id = <?php echo $user_id; ?>;
+                const user_id = <?php if($user_id == NULL)echo "null"; else echo $user_id ?>;
                 if(fname == "" || street_address == "" || city == "" || state == "" || zip_code == "" || country == "" || phone == ""){
                     document.getElementById('ord-error').innerText="Please Fill required fields!";
                 }

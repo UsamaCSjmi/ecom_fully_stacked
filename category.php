@@ -89,6 +89,10 @@
 
                         $getProducts = $products->getProBySubCatId($subcatId);
                     }
+                    elseif(isset($_GET['keyword'])){
+                        $siteHeading = $_GET['keyword'];
+                        $getProducts = $products->getProByKeyword($_GET['keyword']);
+                    }
                     else{
                         $siteHeading = "All Products";
 
@@ -143,6 +147,9 @@
 
                     <?php
                             }
+                        }
+                        else{
+                            echo "Product(s) Not Found!";
                         }
                     ?>
 

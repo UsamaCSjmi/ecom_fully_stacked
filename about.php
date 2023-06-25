@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="./css/loaders.css">
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/responsive.css">
-        <title>The Decor Shop</title>
+        <title><?php echo COMPANY_NAME?> - About</title>
     </head>
     <body onload="loader('body-loader')">
         <div id="body-loader" class="loader">
@@ -23,8 +23,16 @@
             <div class="container flexbox center">
                 <div class=" container about-us w-100 flexbox col start-even">
                     <h1 class="page-head w-100 center">About Us</h1>
-                    <h1 class="about-us-head w-100 center">Welcome to <?php echo COMPANY_NAME?></h1>
-                    <?php include "./utilities/about.php";?>
+                   
+                    <div class="about-content">
+                        <?php 
+                        require_once("./backend/classes/Details.php");
+                        $det = new Details();
+                        $res= $det->getContent('About');
+                        $res = mysqli_fetch_assoc($res);
+                        echo $res['content'];
+                        ?>
+                    </div>
                 </div>
             </div>
             <?php require_once(SERVER_PATH.'/utilities/footer.php')?>
