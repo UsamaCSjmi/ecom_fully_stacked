@@ -22,9 +22,28 @@ if(isset($_GET['id']) && $_GET['id']!=''){
 }
 if(isset($_POST['submit'])){
     $id = get_safe_value($conn, $_POST['type']);
-    $content =  $_POST['content'];
-    $updated_on = date('Y-m-d h:i:s');
-    $res= mysqli_query($conn,"UPDATE store_details SET content = '$content',updated_on='$updated_on' WHERE id = $id");
+    if($id == 10){
+        $updated_on = date('Y-m-d h:i:s');
+        if($_FILES['image']['name']!=''){
+
+            $get_img="select content from store_details where id=10";
+            $res=mysqli_query($conn,$get_img);
+            $row=mysqli_fetch_assoc($res);
+            unlink(SERVER_PATH."/images/shopnow/".$row['content']);
+        
+
+
+            $image=rand(111111111,999999999).'_'.$_FILES['image']['name'];
+            move_uploaded_file($_FILES['image']['tmp_name'],SERVER_PATH.'/images/shopnow/'.$image);
+            $update_sql="UPDATE store_details SET content = '$image',updated_on='$updated_on' WHERE id = 10";
+        }
+    }
+    else{
+        $content =  $_POST['content'];
+        $updated_on = date('Y-m-d h:i:s');
+        $update_sql = "UPDATE store_details SET content = '$content',updated_on='$updated_on' WHERE id = $id";
+    }
+    $res= mysqli_query($conn,$update_sql);
     if($res){
         $msg="Updated Successfully ";
     }
@@ -65,10 +84,23 @@ if(isset($_POST['submit'])){
                                     </div>
                                 </div>
                             </div>
+                            <?php
+                            if($id != 10){
+                            ?>
                             <div class="form-group">
                                 <label for="content" class=" form-control-label">Content</label>
                                 <textarea name="content" placeholder="Enter Content" class="form-control" rows=15 style="resize:none" required ><?php echo $content?></textarea>
                             </div>
+                            <?php
+                            }else{
+                            ?>
+                            <div class="form-group">
+                                <label for="image" class=" form-control-label">Image</label>
+                                <input type="file" name = "image" accept="image/*"/>    
+                            </div>
+                            <?php
+                            }
+                            ?>
                             
                             <button name="submit" type="submit" class="btn btn-lg btn-info btn-block">
                                 <span id="payment-button-amount" >Submit</span>

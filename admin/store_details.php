@@ -31,7 +31,17 @@ $res=mysqli_query($conn,$sql);
                                 <tr>
                                     <td class="serial"><?php echo $i; ?></td>
                                     <td><?php echo $row['type']?></td>
-                                    <td><?php echo $row['content']?></td>
+                                    <td>
+                                        <?php
+                                            if($row['id'] != 10)
+                                            {
+                                                echo $row['content'];
+                                            }
+                                            else{
+                                                echo "<img src='".SITE_PATH."/images/shopnow/".$row['content']."' style='max-width:300px' alt='shop now' />";
+                                            }
+                                        ?>
+                                    </td>
                                     <td><?php echo $row['updated_on']?></td>
                                     <td>
                                     <?php

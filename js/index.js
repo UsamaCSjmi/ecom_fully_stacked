@@ -17,7 +17,7 @@ if(window.screen.width<770){
         subNav[0].classList.remove("subNavigation");
     }
 }
-
+total_cart_items();
 
 function showSearch(){
     document.getElementById("searchPanel").style.visibility="visible";
@@ -60,7 +60,7 @@ function productQuickView(id){
                 document.getElementById('sub-1').src="images/product/"+result['image'];
                 document.getElementById('making-time').innerText="As We Make Fresh Piece-Dispatch Within "+result['making_time']+"...!";
                 document.getElementById('add-to-cart-btn').setAttribute("onclick","manage_cart("+id+",'add')");
-                document.getElementById('buy-now-btn').setAttribute("onclick","buyNow()");
+                document.getElementById('buy-now-btn').setAttribute("onclick","buyNow("+id+")");
                 
                 $.ajax({
                     url:'handleAJAX.php',
@@ -211,6 +211,25 @@ function total_cart_items(){
         },
         error:function(r,e){
             console.log("Error")
+        }
+    });
+}
+
+function buyNow(pid){
+    var qty = jQuery("#qty-product").val();
+    if(!qty){
+        qty=1;
+    } 
+    if(qty<1){
+        qty=1;
+    }
+    jQuery.ajax({
+        url:'./backend/middleware/manageCart.php',
+        type:'post',
+        data:'pid='+pid+'&qty='+qty+'&type=buyNow',
+        success:function(result){
+            total_cart_items();
+            window.location.href = "checkout.php";
         }
     });
 }

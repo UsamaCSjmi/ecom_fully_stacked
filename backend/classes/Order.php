@@ -29,8 +29,8 @@ class Order
         $phone = $array["phone"];
         $order_notes = $array["order_notes"];
         $payment_method = $array["payment_method"];
-        $total_price = $array["total"];
-        $user_id = $array["user_id"];
+        // $total_price = $array["total"];
+        // $user_id = $array["user_id"];
 
 
         $first_name = mysqli_real_escape_string($this->db->link, ($this->fm->validation($first_name)));
@@ -44,8 +44,9 @@ class Order
         $phone = mysqli_real_escape_string($this->db->link, ($this->fm->validation($phone)));
         $order_notes = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_notes)));
         $payment_method = mysqli_real_escape_string($this->db->link, ($this->fm->validation($payment_method)));
-        $total_price = mysqli_real_escape_string($this->db->link, ($this->fm->validation($total_price)));
-        $user_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($user_id)));
+        // $total_price = mysqli_real_escape_string($this->db->link, ($this->fm->validation($total_price)));
+        // $user_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($user_id)));
+        $total_price =0;
         $payment_status = "Pending";
         $order_status = "Pending";
         $added_on = date('Y-m-d h:i:s');
@@ -53,7 +54,7 @@ class Order
         $txnid = "unknown";
 
 
-        $query = "INSERT INTO `order` (fname,lname,street_address,apartment,city,state,zip_code,country,phone,order_notes,payment_status,order_status,total_price,user_id,added_on,order_id,payment_type,txnid) VALUES('$first_name','$last_name','$street_address','$apartment','$city','$state','$zip_code','$country','$phone','$order_notes','$payment_status','$order_status',$total_price,$user_id,'$added_on','$order_id','$payment_method','$txnid')";
+        $query = "INSERT INTO `order` (fname,lname,street_address,apartment,city,state,zip_code,country,phone,order_notes,payment_status,order_status,total_price,user_id,added_on,order_id,payment_type,txnid) VALUES('$first_name','$last_name','$street_address','$apartment','$city','$state','$zip_code','$country','$phone','$order_notes','$payment_status','$order_status',$total_price,NULL,'$added_on','$order_id','$payment_method','$txnid')";
         $catinsert = $this->db->insert($query);
         $order_id = mysqli_insert_id($this->db->link);
         if ($catinsert) {
@@ -92,6 +93,39 @@ class Order
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function updateOrderPayReqID($prid,$order_id)
+    {
+        $prid = mysqli_real_escape_string($this->db->link, ($this->fm->validation($prid)));
+        $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
+
+        $query = "UPDATE `order` SET prid = '$prid' WHERE order_id = '$order_id'";
+        $insert = $this->db->update($query);
+        if ($insert) {
+            $msg = "successfully updated";
+            return $msg;
+        } else {
+            $msg = "Not updated";
+            return $msg;
+        }
+    }
+
+    public function updateOrderTotal($total,$order_id,$user_id)
+    {
+        $total = mysqli_real_escape_string($this->db->link, ($this->fm->validation($total)));
+        $order_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($order_id)));
+        $user_id = mysqli_real_escape_string($this->db->link, ($this->fm->validation($user_id)));
+
+        $query = "UPDATE `order` SET total_price = '$total' , user_id = NULLIF($user_id,0) WHERE order_id = '$order_id'";
+        $insert = $this->db->update($query);
+        if ($insert) {
+            $msg = "successfully updated";
+            return $msg;
+        } else {
+            $msg = "Not updated";
+            return $msg;
         }
     }
 

@@ -23,13 +23,23 @@ $getCat = $cat->getAllCat();
 $getCat2 = $cat2->getAllCat();
 
 ?>
+<?php 
+    require_once("./backend/classes/Details.php");
+    $det = new Details();
+    $res= $det->getContent('announcement');
+    $res = mysqli_fetch_assoc($res);
+?>
 
 <div class="siteHeader w-100">
     <div class="w-100">
         <div class="topbar">
             <a href="/" class="announcements">
-                <span>Made in India | Cash on delivery available |</span>
-                <span>&nbsp Enjoy free shipping all over india</span>
+                <span>
+                    <?php echo $res['content']?>
+                </span>
+
+                <!-- <span>Made in India | Cash on delivery available |</span>
+                <span>&nbsp Enjoy free shipping all over india</span> -->
             </a>
         </div>
         <div class="toolbar w-100">

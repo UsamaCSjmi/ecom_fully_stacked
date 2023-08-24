@@ -1,18 +1,14 @@
 <?php 
 session_start();
-include "./config/config.php"; 
-require('./backend/razorpay-php/Razorpay.php');
-use Razorpay\Api\Api;
+include "./config/config.php";
 ?>
 
 <?php
     if(isset($_POST['submit_order'])){
         include "./backend/classes/Order.php";
-        // $user_id = 0;
-        // $user_id = Session::get("USER_ID");
         $order = new Order();
         $payment_method = $_POST["payment_method"]; 
-        if($payment_method=="razorpay"){
+        if($payment_method=="instamojo"){
 
             $order_id = $order->generateOrder($_POST);
             $_SESSION['order_id']=$order_id;
@@ -42,45 +38,48 @@ use Razorpay\Api\Api;
             }
             $gst=$subtotal*0.18;
             $total = $subtotal + $gst;
-            // $order->updateOrderTotal($total,$order_id);
+            $user_id = Session::get("USER_ID");
+            if(!$user_id)
+            $user_id = 0;
+            $order->updateOrderTotal($total,$order_id,$user_id);
 
-            $orderData = [
-                // 'receipt'         => $order_id,
-                'amount'          => $total*100, // Total rupees in paise
-                'currency'        => 'INR'
-            ];
 
+            session_start();
+
+            $ch = curl_init();
             
-            //Generating RZP order for later on varification
-            $api = new Api(API_KEY,SECRET_KEY);
-            $razorpayOrder = $api->order->create($orderData);
-            $_SESSION['razorpayOrder'] = $razorpayOrder['id'];
+            // curl_setopt($ch, CURLOPT_URL, 'https://www.instamojo.com/api/1.1/payment-requests/');
+            curl_setopt($ch, CURLOPT_URL, 'https://test.instamojo.com/api/1.1/payment-requests/');
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+            curl_setopt($ch, CURLOPT_HTTPHEADER,
+                        array("X-Api-Key:".X_API_KEY,
+                              "X-Auth-Token:".X_AUTH_TOKEN));
+            $payload = Array(
+                'purpose' => 'Buy Product | The Designers Home',
+                'amount' => $total,
+                'phone' => $_POST["phone"],
+                'buyer_name' => $_POST["fname"]." ".$_POST["lname"],
+                'redirect_url' => SITE_PATH.'/redirect.php',
+                'send_sms' => true,
+                'allow_repeated_payments' => false
+            );
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
+            $response = curl_exec($ch);
+            curl_close($ch); 
+            $response = json_decode($response);
+            $_SESSION['TID'] = $response->payment_request->id;
+            $order->updateOrderPayReqID($_SESSION['TID'],$order_id);
 
-            echo $razorpayOrder['id'];
+            header('location:'.$response->payment_request->longurl);
+            die();
+
         }
         else{
             echo "Payment Method Not Available";
             die();
-        }
-    }
-    else if(isset($_POST['handler_details'])&&isset($_POST['razorpay_payment_id'])&&isset($_POST['razorpay_order_id'])&&isset($_POST['razorpay_signature'])){
-        $razorpay_payment_id = $_POST['razorpay_payment_id'];
-        $razorpay_order_id = $_POST['razorpay_order_id'];
-        $razorpay_signature = $_POST['razorpay_signature'];
-
-        $_SESSION['razorpay_payment_id']=$razorpay_payment_id;
-
-        $api = new Api(API_KEY, SECRET_KEY);
-        $result = $api->utility->verifyPaymentSignature(array('razorpay_order_id' => $_SESSION['razorpayOrder'],'razorpay_payment_id' => $razorpay_payment_id, 'razorpay_signature' => $razorpay_signature));
-
-        if($result==""){
-            include "./backend/classes/Order.php";
-            $obj = new Order();
-            $order_id = $_SESSION['order_id'];
-            echo $obj->updateOrder($order_id,"Success",$razorpay_payment_id);
-        }
-        else{
-            echo "error";
         }
     }
     else{

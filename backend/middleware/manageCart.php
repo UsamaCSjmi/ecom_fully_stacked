@@ -23,6 +23,10 @@ if($type=='remove'){
 if($type=='update'){
     $obj->updateProduct($_POST['pid'],$_POST['qty']);
 }
+if($type=='buyNow'){
+    $obj->emptyProduct();
+    $obj->addProduct($_POST['pid'],$_POST['qty']);
+}
 if($type=='getTotal'){
     $total = $obj->totalProduct();
     echo $total;

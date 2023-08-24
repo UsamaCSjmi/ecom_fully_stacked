@@ -152,9 +152,14 @@
                     <span class="sub-tagline">All over India</span>
                 </div>
             </div>
-
+            <?php 
+                require_once("./backend/classes/Details.php");
+                $det = new Details();
+                $res= $det->getContent('shop_now_image');
+                $res = mysqli_fetch_assoc($res);
+            ?>
             <div class="promo-section flexbox center w-100">
-                <img src="images/img3.webp" alt="promo-image">
+                <img src="<?php echo SITE_PATH;?>/images/shopnow/<?php echo $res['content'];?>" alt="promo-image">
                 <div class="promo-box">
                     <div class="promo-content flexbox col start-even">
                         <h4>IMPRESSIVE</h4>

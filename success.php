@@ -28,7 +28,7 @@ session_start();
                     <p class="center w-100">
                         Order Id : <?php echo $_SESSION['order_id']?>
                         <br>
-                        Payment Id : <?php echo $_SESSION['razorpay_payment_id']?> 
+                        Payment Id : <?php echo $_SESSION['payment_id']?> 
                     </p>
                 </div>
             </div>
