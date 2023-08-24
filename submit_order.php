@@ -77,6 +77,43 @@ include "./config/config.php";
             die();
 
         }
+        elseif($payment_method=="COD"){
+            
+            $order_id = $order->generateOrder($_POST);
+            $_SESSION['order_id']=$order_id;
+
+            // -----------------Getting Order products details-------------------- 
+            include "./backend/classes/Cart.php";
+            include "./backend/classes/Product.php";
+            $obj = new Cart();                                  
+            $items = $obj->getCartItems();
+            $subtotal = 0;
+            if($items){
+                foreach($items as $pid=>$qty){
+                    $product = new Product();
+                    $getProduct = $product->getProById($pid);
+                    $item = $getProduct->fetch_assoc();
+                    $amount = $item['price']*$qty*100/118;
+                    $subtotal = $subtotal + $amount;
+                    $order_details = array("product_id"=>$pid,"qty"=>$qty,"price"=>$item['price'],"order_id"=>$order_id);
+
+                    $insert_status = $order->insertOrderDetails($order_details);
+                    if($insert_status === false){
+                        echo "failed";
+                        return;
+                        die();
+                    }
+                }
+            }
+            $gst=$subtotal*0.18;
+            $total = $subtotal + $gst;
+            $user_id = Session::get("USER_ID");
+            if(!$user_id)
+            $user_id = 0;
+            $order->updateOrderTotal($total,$order_id,$user_id);
+            header("Location:success.php");
+            die();
+        }
         else{
             echo "Payment Method Not Available";
             die();

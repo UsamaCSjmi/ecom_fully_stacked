@@ -161,7 +161,7 @@
                                             </div>
                                             
                                             <div class="payment_option">
-                                                <input type="radio" id="COD" name="payment_method" value="COD" disabled>
+                                                <input type="radio" id="COD" name="payment_method" value="COD">
                                                 <label for="COD">COD(Currently unavailable)</label>
                                             </div>
                                         </div>

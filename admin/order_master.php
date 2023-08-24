@@ -36,7 +36,7 @@ require 'top.inc.php';
                                     </td>
                                     <td><?php echo $row['added_on'];?></td>
                                     <td><?php echo $row['payment_type'];?></td>
-                                    <td <?php if($row['payment_status']=="Success") echo "class='text-success'"; elseif($row['payment_status']=="Pending")echo "class='text-warning'";else echo "class='text-danger'"; ?> >
+                                    <td <?php if($row['payment_type']=="COD"){echo "class='text-success'";}else{if($row['payment_status']=="Success") echo "class='text-success'"; elseif($row['payment_status']=="Pending")echo "class='text-warning'";else echo "class='text-danger'"; }?> >
                                         <?php echo $row['payment_status'];?>
                                     </td>
                                     <td><?php echo $row['txnid'];?></td>
